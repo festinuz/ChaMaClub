@@ -70,9 +70,10 @@ looks like this:
 
 You can always update info by updating your comment or delete your comment to
 delete your club from a table. At the moment, the bot is set to update the
-post every {seconds} seconds. If post hasn\'t been updated recently it means
-the bot is currently offline. If this bot meets any success i\'ll put it on
-24/7 host!'''.format(regions=','.join(REGIONS), seconds=SECONDS)
+post every {seconds} seconds.
+
+The bot is currently hosted on Heroku and should be working 24/7!
+'''.format(regions=', '.join(REGIONS), seconds=SECONDS)
         submission.edit(TEXTFISH+END_OF_THE_POST)
     print('Post successfully updated!, totall comments parsed:',
           len(submission.comments))
