@@ -33,7 +33,7 @@ Club name|Club tag|Owner IGN
 :--|:--|:--\n'''
         potential_clubs = {region: list() for region in REGIONS}
         submission = reddit.submission(id=subreddits[subreddit])
-        
+
         for top_level_comment in submission.comments:
             body = top_level_comment.body.split('\n')
             if body[0].lower() == 'club' and len(body) > 8:
@@ -42,12 +42,12 @@ Club name|Club tag|Owner IGN
                         (body[4], body[6], body[8],
                          top_level_comment.permalink())
                     )
-                    
+
         for region, clubs in potential_clubs.items():
             if len(clubs) > 0:
                 TEXTFISH += CLUB_TEXTFISH.format(region=region.upper())
                 for club in clubs:
-                    link = '[{}]({})'.format(club[0], club[3])
+                    link = '[{}]({} "go to comment")'.format(club[0], club[3])
                     TEXTFISH += '{}|{}|{}\n'.format(club[1], club[2], link)
 
         END_OF_THE_POST = '''\n
@@ -59,15 +59,15 @@ looks like this:
 
 
     club
-        
+
     REGION CODE ({regions})
-        
+
     YOUR IGN (used by people to send a friend request)
-        
+
     CLUB NAME
-        
+
     CLUB TAG (leave '-' if you dont have one yet)
-        
+
 You can always update info by updating your comment or delete your comment to
 delete your club from a table. At the moment, the bot is set to update the
 post every {seconds} seconds. If post hasn\'t been updated recently it means
