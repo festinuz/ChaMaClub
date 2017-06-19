@@ -15,5 +15,9 @@ subreddits = {
 }
 
 subreddit = reddit.subreddit('test')
-subreddit.submit('definitive bot testing', selftext=SELFTEXT)
+# subreddit.submit('definitive bot testing', selftext=SELFTEXT)
 # help(subreddit)
+submission = reddit.submission(id='6i7ebc')
+submission.edit(SELFTEXT)
+for top_level_comment in submission.comments:
+    print(top_level_comment.body)
