@@ -39,14 +39,16 @@ Club name|Club tag|Owner IGN
             if body[0].lower() == 'club' and len(body) > 8:
                 if body[2].upper() in potential_clubs:
                     potential_clubs[body[2].upper()].append(
-                        (body[4], body[6], body[8])
+                        (body[4], body[6], body[8],
+                         top_level_comment.permalink())
                     )
                     
         for region, clubs in potential_clubs.items():
             if len(clubs) > 0:
                 TEXTFISH += CLUB_TEXTFISH.format(region=region.upper())
                 for club in clubs:
-                    TEXTFISH += '{}|{}|{}\n'.format(club[1], club[2], club[0])
+                    link = '[{}]({})'.format(club[0], club[3])
+                    TEXTFISH += '{}|{}|{}\n'.format(club[1], club[2], link)
 
         END_OF_THE_POST = '''\n
 This bot has just been created and is currently being tested. I would *love*
@@ -72,4 +74,6 @@ post every {seconds} seconds. If post hasn\'t been updated recently it means
 the bot is currently offline. If this bot meets any success i\'ll put it on
 24/7 host!'''.format(regions=','.join(REGIONS), seconds=SECONDS)
         submission.edit(TEXTFISH+END_OF_THE_POST)
+    print('Post successfully updated!, totall comments parsed:',
+          len(submission.comments))
     sleep(SECONDS)
