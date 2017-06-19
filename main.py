@@ -1,13 +1,13 @@
 import praw
-from data.bot_data import DATA
+from os import environ
 from time import sleep
 
 
-reddit = reddit = praw.Reddit(client_id=DATA['client_id'],
-                              client_secret=DATA['client_secret'],
-                              user_agent=DATA['user_agent'],
-                              username=DATA['username'],
-                              password=DATA['password'])
+reddit = reddit = praw.Reddit(client_id=environ['CLIENT_ID'],
+                              client_secret=environ['CLIENT_SECRET'],
+                              user_agent=environ['USER_AGENT'],
+                              username=environ['USERNAME'],
+                              password=environ['PASSWORD'])
 
 print(reddit.read_only)
 subreddits = {
