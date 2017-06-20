@@ -23,8 +23,10 @@ while True:
     for subreddit in subreddits:
         TEXTFISH = '''
 Hello, /r/{subreddit}! This post updates automatically to help you find
-desired club or fill your club with some folks! Some additional info can be
-found at the end of the post.\n
+desired club or fill your club with some folks! **If you with to join a club**
+that you see in tables below, you sould add club owner as a friend in League of
+legends and ask him to add you to the club. You can find info on **how to add a
+new club** at the end of the post.\n
         '''.format(subreddit=subreddit)
 
         CLUB_TEXTFISH = '''\n
@@ -54,7 +56,7 @@ Club name|Club tag|Owner IGN
 This bot has just been created and is currently being tested. I would *love*
 to hear your opinion! I have some extra things in mind that i will do if my
 bot is at all needed, like checking last time club owner was online and stuff.
-Anyways, here is how you can add your club: write a top level comment that
+Anyways, here is how you can **add your club**: write a top level comment that
 looks like this:
 
 
