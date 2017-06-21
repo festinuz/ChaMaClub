@@ -73,6 +73,7 @@ Club name|Club tag|Owner IGN
 ## How to **add your club** to a list
 + Write a new comment that looks like an example below.
 
+
     club
 
     REGION CODE ({regions})
@@ -83,9 +84,11 @@ Club name|Club tag|Owner IGN
 
     CLUB TAG (leave '-' if you dont have one yet)
 
+
 You can always update club information by updating your comment, as well as you
 can delete your comment when your club is full.
 
+--------
 
 At the moment, the bot is set to update the post every {seconds} seconds. The
 bot is currently hosted on Heroku and should be working 24/7!
