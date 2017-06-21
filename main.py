@@ -71,7 +71,7 @@ Club name|Club tag|Owner IGN
 
 
 ## How to **add your club** to a list
-+ Write a new comment that looks like an example below.
+Write a new comment that looks like an example below:
 
 
     club
