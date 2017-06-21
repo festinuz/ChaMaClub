@@ -23,11 +23,12 @@ while True:
     for subreddit in subreddits:
         TEXTFISH = '''
 Hello, /r/{subreddit}! This post updates automatically to help you find
-desired club or fill your club with some folks! **If you with to join a club**
-that you see in tables below, you sould add club owner as a friend in League of
-legends and ask him to add you to the club. You can find info on **how to add a
-new club** at the end of the post.\n
-        '''.format(subreddit=subreddit)
+desired club or fill your club with some folks! You can find additional info
+at the end of the post.
+
+-----------
+
+'''.format(subreddit=subreddit)
 
         CLUB_TEXTFISH = '''\n
 # Available {region} clubs:
@@ -38,12 +39,19 @@ Club name|Club tag|Owner IGN
 
         for top_level_comment in submission.comments:
             body = top_level_comment.body.split('\n')
-            if body[0].lower() == 'club' and len(body) > 8:
-                if body[2].upper() in potential_clubs:
-                    potential_clubs[body[2].upper()].append(
-                        (body[4], body[6], body[8],
-                         top_level_comment.permalink())
-                    )
+            comment_is_club = False
+            if len(body) > 8:
+                if (
+                        body[0].lower() == 'club' and
+                        body[2].upper() in potential_clubs and
+                        len(body[4]) < 20 and
+                        len(body[6]) < 26 and
+                        len(body[8]) < 6):
+                    comment_is_club = True
+            if comment_is_club:
+                potential_clubs[body[2].upper()].append(
+                    (body[4], body[6], body[8],
+                     top_level_comment.permalink()))
 
         for region, clubs in potential_clubs.items():
             if len(clubs) > 0:
@@ -53,12 +61,17 @@ Club name|Club tag|Owner IGN
                     TEXTFISH += '{}|{}|{}\n'.format(club[1], club[2], link)
 
         END_OF_THE_POST = '''\n
-This bot has just been created and is currently being tested. I would *love*
-to hear your opinion! I have some extra things in mind that i will do if my
-bot is at all needed, like checking last time club owner was online and stuff.
-Anyways, here is how you can **add your club**: write a top level comment that
-looks like this:
 
+----------
+
+## How to **join a club**
++ Find a club that you want to join
++ Add club owner to friends in League of legends
++ Ask club owner for a club invite
+
+
+## How to **add your club** to a list
++ Write a new comment that looks like an example below.
 
     club
 
@@ -70,11 +83,12 @@ looks like this:
 
     CLUB TAG (leave '-' if you dont have one yet)
 
-You can always update info by updating your comment or delete your comment to
-delete your club from a table. At the moment, the bot is set to update the
-post every {seconds} seconds.
+You can always update club information by updating your comment, as well as you
+can delete your comment when your club is full.
 
-The bot is currently hosted on Heroku and should be working 24/7!
+
+At the moment, the bot is set to update the post every {seconds} seconds. The
+bot is currently hosted on Heroku and should be working 24/7!
 '''.format(regions=', '.join(REGIONS), seconds=SECONDS)
         submission.edit(TEXTFISH+END_OF_THE_POST)
     print('Post successfully updated!, totall comments parsed:',
