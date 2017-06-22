@@ -17,15 +17,16 @@ reddit_api = reddit.RateRedditAPI(client_id=os.environ['CLIENT_ID'],
 
 
 class Club:
-    def __init__(self, region, owner_summoner_name, club_name, club_tag):
+    def __init__(self, region, owner_summoner_name, club_name, club_tag, link):
         self.region = region.upper()
         self.owner = owner_summoner_name
         self.club = club_name
         self.tag = club_tag
+        self.permalink = link
 
     def __str__(self):
         return static_data.TEXT_CLUB_ROW.format(
-          self.club, self.tag, self.owner, self.region)
+          self.club, self.tag, self.owner, self.permalink)
 
 
 async def get_clubs_from_subreddit(submission_id):
