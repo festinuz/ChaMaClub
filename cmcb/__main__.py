@@ -19,9 +19,9 @@ reddit_api = reddit.RateRedditAPI(client_id=os.environ['CLIENT_ID'],
 class Club:
     def __init__(self, region, owner_summoner_name, club_name, club_tag, link):
         self.region = region.upper()
-        self.owner = owner_summoner_name
-        self.club = club_name
-        self.tag = club_tag
+        self.owner = reddit.escape_markdown(owner_summoner_name)
+        self.club = reddit.escape_markdown(club_name)
+        self.tag = reddit.escape_markdown(club_tag)
         self.permalink = link
 
     def __str__(self):

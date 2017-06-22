@@ -33,15 +33,15 @@ TEXT_BOTTOM = '''\n\n----------\n
 Write a new comment that looks like an example below:
 
 
-club
+    club
 
-REGION CODE ({regions})
+    REGION CODE ({regions})
 
-YOUR IGN (used by people to send a friend request)
+    YOUR IGN (used by people to send a friend request)
 
-CLUB NAME
+    CLUB NAME
 
-CLUB TAG (leave '-' if you dont have one yet)
+    CLUB TAG (leave '-' if you dont have one yet)
 
 
 You can always update club information by updating your comment, as well as you

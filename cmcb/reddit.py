@@ -1,5 +1,13 @@
-
 import praw
+
+
+MARKDOWN_CHARACTERS = '*+-_~#^=`[]()>'
+
+
+def escape_markdown(string):
+    for charater in MARKDOWN_CHARACTERS:
+        string = string.replace(charater, '\\'+charater)
+    return string
 
 
 class RateRedditAPI:
