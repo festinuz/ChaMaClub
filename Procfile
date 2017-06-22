@@ -1,1 +1,1 @@
-bot: python main.py
+bot: python cmcb/__main__.py
