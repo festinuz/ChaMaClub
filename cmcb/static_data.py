@@ -13,7 +13,7 @@ at the end of the post.\n\n--------\n
 TEXT_REGION_TABLE = '''
 \n# Available {region} clubs:
 Club name|Club tag|Owner IGN
-:--|:--|:--\n
+:--|:--|:--
 '''
 
 TEXT_CLUB_ROW = '{}|{}|[{}]({} "go to comment")\n'
