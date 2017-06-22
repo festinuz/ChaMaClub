@@ -44,7 +44,8 @@ async def get_clubs_from_subreddit(submission_id):
                     len(body[8]) < 6):
                 comment_is_club = True
         if comment_is_club:
-            new_club = Club(body[2], body[4], body[6], body[8])
+            new_club = Club(body[2], body[4], body[6], body[8],
+                            comment.permalink())
             clubs_by_regions[new_club.region].append(new_club)
     return clubs_by_regions
 
