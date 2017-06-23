@@ -68,17 +68,17 @@ class AsyncRateLeagueAPI:
         url = '/lol/summoner/v3/summoners/by-name/{summonerName}'
         return self._request(url, region, summonerName=summoner_name)
 
-    async def get_summoner_revision_date(self, region, summoner_name):
-        summoner = await self.get_summoner_by_name(region, summoner_name)
-        return summoner['revisionDate']
-
     @time_based_async_cache
     async def get_revision(self, region, summoner):
         output = str()
-        revision_date = await self.get_summoner_revision_date(region, summoner)
-        revision_date = revision_date/1000
-        days_ago = (time() - revision_date)//static_data.DAY
-        output = 'Today' if days_ago == 0 else output
-        output = '1 day ago' if days_ago == 1 else output
-        output = f'{days_ago} days ago' if days_ago > 1 else output
+        summoner = await self.get_summoner_by_name(region, summoner)
+        try:
+            revision_date = summoner['revisionDate']
+            revision_date = revision_date/1000
+            days_ago = (time() - revision_date)//static_data.DAY
+            output = 'Today' if days_ago == 0 else output
+            output = '1 day ago' if days_ago == 1 else output
+            output = f'{days_ago} days ago' if days_ago > 1 else output
+        except KeyError:
+            output = '*Never (not found)!*'
         return output
