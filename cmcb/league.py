@@ -76,9 +76,12 @@ class AsyncRateLeagueAPI:
             revision_date = summoner['revisionDate']
             revision_date = revision_date/1000
             days_ago = (time() - revision_date)//static_data.DAY
-            output = 'Today' if days_ago == 0 else output
-            output = '1 day ago' if days_ago == 1 else output
-            output = f'{days_ago} days ago' if days_ago > 1 else output
+            if days_ago == 0:
+                output = 'Today'
+            elif days_ago % 10 == 1 and days_ago != 11:
+                output = f'{days_ago} day ago'
+            else:
+                output = f'{days_ago} days ago'
         except KeyError:
             output = '*Never (not found)!*'
         return output
