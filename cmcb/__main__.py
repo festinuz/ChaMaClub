@@ -15,7 +15,13 @@ reddit_api = reddit.RateRedditAPI(client_id=os.environ['CLIENT_ID'],
 
 
 class Club:
-    async def __init__(self, region, summoner_name, club_name, club_tag, link):
+    @classmethod
+    async def create(cls, region, summoner_name, club_name, club_tag, link):
+        self = Club(region, summoner_name, club_name, club_tag, link)
+        self.revision = await league_api.get_revision(region, summoner_name)
+        return self
+
+    def __init__(self, region, summoner_name, club_name, club_tag, link):
         self.region = region.upper()
         self.owner = reddit.escape_markdown(summoner_name)
         self.club = reddit.escape_markdown(club_name)
@@ -24,7 +30,6 @@ class Club:
         else:
             self.tag = reddit.escape_markdown(club_tag)
         self.permalink = link
-        self.revision = await league_api.get_revision(region, summoner_name)
 
     def __str__(self):
         return static_data.TEXT_CLUB_ROW.format(
@@ -46,8 +51,8 @@ async def get_clubs_from_subreddit(submission_id):
                     len(body[8]) < 6):
                 comment_is_club = True
         if comment_is_club:
-            new_club = Club(body[2], body[4], body[6], body[8],
-                            comment.permalink())
+            new_club = Club.create(body[2], body[4], body[6], body[8],
+                                   comment.permalink())
             clubs_by_regions[body[2]].append(new_club)
     temp = [asyncio.gather(*clubs) for reg, clubs in clubs_by_regions.items()]
     clubs = await asyncio.gather(*temp)
