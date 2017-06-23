@@ -25,7 +25,7 @@ Club name|Club tag|Owner IGN|Last time online
 TEXT_CLUB_ROW = '[{}]({} "Go to comment")|{}|[{}]({} "Check on op.gg")|{}\n'
 
 TEXT_EMPTY_REGIONS = '''
-Unfortunately, there are no clubs awalible for following regions at the moment
+Unfortunately, there are no clubs available for following regions at the moment
 : {empty_regions}\n'''
 
 TEXT_BOTTOM = '''\n\n----------\n
@@ -47,7 +47,7 @@ Write a new comment that looks like an example below:
 
     CLUB NAME
 
-    CLUB TAG (leave '&' if you dont have one yet)
+    CLUB TAG (leave '$' if you dont have one yet)
 
 
 You can always update club information by updating your comment, as well as you
