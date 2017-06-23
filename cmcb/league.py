@@ -35,7 +35,7 @@ def time_based_async_cache(async_function):
         key = _make_key(args, kwargs, False)
         cached_result = cache.get(key)
         if cached_result is not None:
-            return cached_result
+            return cached_result.decode('utf-8')
         result = await async_function(*args, **kwargs)
         cache.setex(key, result, static_data.LEAGUE_UPDATE_TIMEOUT)
         return result
