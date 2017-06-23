@@ -1,8 +1,10 @@
+import os
 import asyncio
 from time import time
 from functools import _make_key
 
 import aiohttp
+import redis
 
 import static_data
 
@@ -27,17 +29,16 @@ PLATFORMS = {
 
 
 def time_based_async_cache(async_function):
-    cache = dict()
+    cache = redis.from_url(os.environ['REDIS_URL'])
     timeout = static_data.HOUR
 
     async def wrapped_function(*args, **kwargs):
         key = _make_key(args, kwargs, False)
         cached_result = cache.get(key)
         if cached_result is not None:
-            if time() - cached_result[0] < timeout:
-                return cached_result[1]
+            return cached_result
         result = await async_function(*args, **kwargs)
-        cache[key] = (time(), result)
+        cache.setex(key, result, timeout)
         return result
     return wrapped_function
 
