@@ -41,7 +41,7 @@ Write a new comment that looks like an example below:
 
     CLUB NAME
 
-    CLUB TAG (leave '-' if you dont have one yet)
+    CLUB TAG (leave '&' if you dont have one yet)
 
 
 You can always update club information by updating your comment, as well as you
