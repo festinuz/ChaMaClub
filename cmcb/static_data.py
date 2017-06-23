@@ -1,3 +1,9 @@
+SECOND = 1
+MINUTE = 60*SECOND
+HOUR = 60*MINUTE
+DAY = 24*HOUR
+WEEK = 7*DAY
+
 SUBREDDITS = {
     'VayneMains': '6i7wp9',
 }
@@ -12,11 +18,11 @@ at the end of the post.\n\n--------\n
 
 TEXT_REGION_TABLE = '''
 \n# Available {region} clubs:
-Club name|Club tag|Owner IGN
-:--|:--|:--
+Club name|Club tag|Owner IGN|Last time online
+:--------|:-------|:--------|:---------------
 '''
 
-TEXT_CLUB_ROW = '{}|{}|[{}]({} "go to comment")\n'
+TEXT_CLUB_ROW = '{}|{}|[{}]({} "go to comment")|{}\n'
 
 TEXT_EMPTY_REGIONS = '''
 Unfortunately, there are no clubs awalible for following regions at the moment
