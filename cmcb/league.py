@@ -35,7 +35,7 @@ def time_based_async_cache(async_function):
         cached_result = cache.get(key)
         if cached_result is not None:
             if time() - cached_result[0] < timeout:
-                return cached_result
+                return cached_result[1]
         result = await async_function(*args, **kwargs)
         cache[key] = (time(), result)
         return result
