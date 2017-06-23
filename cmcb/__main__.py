@@ -2,7 +2,6 @@ import os
 # import time
 import asyncio
 
-
 import league
 import reddit
 import static_data
@@ -41,7 +40,7 @@ async def get_clubs_from_subreddit(submission_id):
                     body[2].upper() in league.REGIONS and
                     len(body[4]) < 20 and
                     len(body[6]) < 26 and
-                    len(body[8]) < 6):
+                    2 < len(body[8]) < 6 or body[8] in ['-', '$']):
                 comment_is_club = True
         if comment_is_club:
             new_club = Club(body[2], body[4], body[6], body[8],
