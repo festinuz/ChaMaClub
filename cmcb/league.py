@@ -18,11 +18,11 @@ PLATFORMS = {
     'JP':   'JP1',
     'KR':   'KR',
     'LAN':  'LA1',
-    'LAS':  'LA2,
+    'LAS':  'LA2',
     'NA':   'NA',
-    'OCE':  'OC1,
-    'TR':   'TR1,
-    'RU':   'RU,
+    'OCE':  'OC1',
+    'TR':   'TR1',
+    'RU':   'RU',
     'PBE':  'PBE1',
 }
 
