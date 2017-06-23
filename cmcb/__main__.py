@@ -1,5 +1,4 @@
 import os
-# import time
 import asyncio
 
 import league
@@ -7,7 +6,7 @@ import reddit
 import static_data
 
 
-# league_api = league.AsyncRateLeagueAPI(api_key=os.environ['RIOT_API_KEY'])
+league_api = league.AsyncRateLeagueAPI(api_key=os.environ['RIOT_API_KEY'])
 reddit_api = reddit.RateRedditAPI(client_id=os.environ['CLIENT_ID'],
                                   client_secret=os.environ['CLIENT_SECRET'],
                                   user_agent=os.environ['USER_AGENT'],
@@ -16,16 +15,27 @@ reddit_api = reddit.RateRedditAPI(client_id=os.environ['CLIENT_ID'],
 
 
 class Club:
-    def __init__(self, region, owner_summoner_name, club_name, club_tag, link):
+    @classmethod
+    async def create(cls, region, summoner_name, club_name, club_tag, link):
+        self = Club(region, summoner_name, club_name, club_tag, link)
+        self.revision = await league_api.get_revision(region, summoner_name)
+        return self
+
+    def __init__(self, region, summoner_name, club_name, club_tag, link):
         self.region = region.upper()
-        self.owner = reddit.escape_markdown(owner_summoner_name)
+        self.owner = reddit.escape_markdown(summoner_name)
         self.club = reddit.escape_markdown(club_name)
-        self.tag = reddit.escape_markdown(club_tag)
+        if club_tag in ['-', '$']:
+            self.tag = '*No tag yet!*'
+        else:
+            self.tag = reddit.escape_markdown(club_tag)
         self.permalink = link
+        self.opgg = f'https://{region}.op.gg/summoner/userName={summoner_name}'
 
     def __str__(self):
         return static_data.TEXT_CLUB_ROW.format(
-          self.club, self.tag, self.owner, self.permalink)
+          self.club, self.permalink, self.tag, self.owner, self.opgg,
+          self.revision)
 
 
 async def get_clubs_from_subreddit(submission_id):
@@ -43,9 +53,15 @@ async def get_clubs_from_subreddit(submission_id):
                     2 < len(body[8]) < 6 or body[8] in ['-', '$']):
                 comment_is_club = True
         if comment_is_club:
-            new_club = Club(body[2], body[4], body[6], body[8],
-                            comment.permalink())
-            clubs_by_regions[new_club.region].append(new_club)
+            new_club = Club.create(body[2], body[4], body[6], body[8],
+                                   comment.permalink())
+            clubs_by_regions[body[2]].append(new_club)
+    temp = [asyncio.gather(*clubs) for reg, clubs in clubs_by_regions.items()]
+    region_clubs = await asyncio.gather(*temp)
+    clubs_by_regions = {region: list() for region in league.REGIONS}
+    for clubs in region_clubs:
+        for club in clubs:
+            clubs_by_regions[club.region].append(club)
     return clubs_by_regions
 
 
