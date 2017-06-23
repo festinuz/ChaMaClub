@@ -6,8 +6,7 @@ import aiohttp
 
 import static_data
 
-
-API_URL_BASE = 'https://{platform}.api.pvp.net/{api_url}'
+API_URL_BASE = 'https://{platform}.api.riotgames.com/{api_url}'
 REGIONS = {'BR', 'EUNE', 'EUW', 'JP', 'KR', 'LAN', 'LAS', 'NA', 'OCE', 'TR',
            'RU', 'PBE'}
 
