@@ -80,7 +80,8 @@ def create_updated_text(subreddit, clubs_by_regions):
     updated_text += static_data.TEXT_BOTTOM
     updated_text = updated_text.format(
       subreddit=subreddit, regions=', '.join(league.REGIONS),
-      seconds=static_data.UPDATE_TIMEOUT)
+      redditRevision=static_data.REDDIT_UPDATE_TIMEOUT,
+      leagueRevision=static_data.LEAGUE_UPDATE_TIMEOUT//static_data.MINUTE)
     return updated_text
 
 
@@ -99,7 +100,7 @@ def update_subreddits(subreddits):
 async def main():
     while True:
         await asyncio.gather(update_subreddits(static_data.SUBREDDITS),
-                             asyncio.sleep(static_data.UPDATE_TIMEOUT))
+                             asyncio.sleep(static_data.REDDIT_UPDATE_TIMEOUT))
 
 
 if __name__ == '__main__':

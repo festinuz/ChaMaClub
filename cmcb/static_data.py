@@ -8,7 +8,8 @@ SUBREDDITS = {
     'VayneMains': '6i7wp9',
 }
 
-UPDATE_TIMEOUT = 60
+REDDIT_UPDATE_TIMEOUT = MINUTE
+LEAGUE_UPDATE_TIMEOUT = HOUR
 
 TEXT_HEAD = '''
 Hello, /r/{subreddit}! This post updates automatically to help you find
@@ -53,6 +54,7 @@ Write a new comment that looks like an example below:
 You can always update club information by updating your comment, as well as you
 can delete your comment when your club is full.
 \n--------\n
-At the moment, the bot is set to update the post every {seconds} seconds. The
-bot is currently hosted on Heroku and should be working 24/7!
+At the moment, the bot is set to update the post every {redditRevision}
+seconds. The "Last time online" column updates every {leagueRevision} minutes.
+The bot is currently hosted on Heroku and should be working 24/7!
 '''

@@ -30,7 +30,6 @@ PLATFORMS = {
 
 def time_based_async_cache(async_function):
     cache = redis.from_url(os.environ['REDIS_URL'])
-    timeout = static_data.HOUR
 
     async def wrapped_function(*args, **kwargs):
         key = _make_key(args, kwargs, False)
@@ -38,7 +37,7 @@ def time_based_async_cache(async_function):
         if cached_result is not None:
             return cached_result
         result = await async_function(*args, **kwargs)
-        cache.setex(key, result, timeout)
+        cache.setex(key, result, static_data.LEAGUE_UPDATE_TIMEOUT)
         return result
     return wrapped_function
 
