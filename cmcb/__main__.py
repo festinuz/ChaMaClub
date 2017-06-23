@@ -55,10 +55,11 @@ async def get_clubs_from_subreddit(submission_id):
                                    comment.permalink())
             clubs_by_regions[body[2]].append(new_club)
     temp = [asyncio.gather(*clubs) for reg, clubs in clubs_by_regions.items()]
-    clubs = await asyncio.gather(*temp)
+    region_clubs = await asyncio.gather(*temp)
     clubs_by_regions = {region: list() for region in league.REGIONS}
-    for club in clubs:
-        clubs_by_regions[club.region].append(club)
+    for clubs in region_clubs:
+        for club in clubs:
+            clubs_by_regions[club.region].append(club)
     return clubs_by_regions
 
 
