@@ -30,10 +30,12 @@ class Club:
         else:
             self.tag = reddit.escape_markdown(club_tag)
         self.permalink = link
+        self.opgg = f'https://{region}.op.gg/summoner/userName={summoner_name}'
 
     def __str__(self):
         return static_data.TEXT_CLUB_ROW.format(
-          self.club, self.tag, self.owner, self.permalink, self.revision)
+          self.club, self.permalink, self.tag, self.owner, self.opgg,
+          self.revision)
 
 
 async def get_clubs_from_subreddit(submission_id):
