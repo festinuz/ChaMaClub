@@ -7,9 +7,24 @@ import aiohttp
 import static_data
 
 
-API_URL_BASE = 'https://{region}.api.pvp.net/{api_url}'
+API_URL_BASE = 'https://{platform}.api.pvp.net/{api_url}'
 REGIONS = {'BR', 'EUNE', 'EUW', 'JP', 'KR', 'LAN', 'LAS', 'NA', 'OCE', 'TR',
            'RU', 'PBE'}
+
+PLATFORMS = {
+    'BR':   'BR1',
+    'EUNE': 'EUN1',
+    'EUW':  'EUW1',
+    'JP':   'JP1',
+    'KR':   'KR',
+    'LAN':  'LA1',
+    'LAS':  'LA2,
+    'NA':   'NA',
+    'OCE':  'OC1,
+    'TR':   'TR1,
+    'RU':   'RU,
+    'PBE':  'PBE1',
+}
 
 
 def time_based_async_cache(async_function):
@@ -46,7 +61,7 @@ class AsyncRateLeagueAPI:
 
     def _request(self, api_url, region, **kwargs):
         api_url = api_url.format(region=region, **kwargs)
-        url = API_URL_BASE.format(region=region, api_url=api_url)
+        url = API_URL_BASE.format(plaftorm=PLATFORMS[region], api_url=api_url)
         kwargs['api_key'] = self.api_key
         return self._session_get(url, params=kwargs)
 
