@@ -73,7 +73,7 @@ class AsyncRateLeagueAPI:
     async def get_summoner_revison_date(self, region, summoner):
         summoner = await self.get_summoner_by_name(region, summoner)
         try:
-            return summoner['revisionDate']
+            return int(summoner['revisionDate'])
         except KeyError:
             return None
 
