@@ -28,16 +28,16 @@ PLATFORMS = {
 }
 
 
-def time_based_async_cache(async_function):
+def time_based_async_cache(async_method):
     cache = redis.from_url(os.environ['REDIS_URL'])
 
     async def wrapped_method(self, *args, **kwargs):
-        name_and_args = (async_function.__name__,) + tuple(arg for arg in args)
+        name_and_args = (async_method.__name__,) + tuple(arg for arg in args)
         key = _make_key(name_and_args, kwargs, False)
         cached_result = cache.get(key)
         if cached_result is not None:
             return cached_result.decode('utf-8')
-        result = await async_function(*args, **kwargs)
+        result = await async_method(self, *args, **kwargs)
         cache.setex(key, result, static_data.LEAGUE_UPDATE_TIMEOUT)
         print('Setting revisionDate:', result)
         return result
