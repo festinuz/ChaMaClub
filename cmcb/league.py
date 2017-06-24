@@ -32,7 +32,8 @@ def time_based_async_cache(async_function):
     cache = redis.from_url(os.environ['REDIS_URL'])
 
     async def wrapped_function(*args, **kwargs):
-        key = _make_key(args, kwargs, False)
+        name_and_args = [async_function.__name__] + [arg for arg in args]
+        key = _make_key(name_and_args, kwargs, False)
         cached_result = cache.get(key)
         if cached_result is not None:
             return cached_result.decode('utf-8')
@@ -69,12 +70,18 @@ class AsyncRateLeagueAPI:
         return self._request(url, region, summonerName=summoner_name)
 
     @time_based_async_cache
-    async def get_revision(self, region, summoner):
-        output = str()
+    async def get_summoner_revison_date(self, region, summoner):
         summoner = await self.get_summoner_by_name(region, summoner)
         try:
-            revision_date = summoner['revisionDate']
-            revision_date = revision_date/1000
+            return summoner['revisionDate']
+        except KeyError:
+            return None
+
+    async def get_revision(self, region, summoner):
+        output = str()
+        revision_date = await self.get_summoner_revison_date(region, summoner)
+        if revision_date is not None:
+            revision_date /= 1000
             days_ago = (time() - revision_date)//static_data.DAY
             if days_ago == 0:
                 output = 'Today'
@@ -82,6 +89,6 @@ class AsyncRateLeagueAPI:
                 output = f'{days_ago} day ago'
             else:
                 output = f'{days_ago} days ago'
-        except KeyError:
+        else:
             output = '*Never (not found)!*'
         return output
