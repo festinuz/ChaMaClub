@@ -32,7 +32,7 @@ def time_based_async_cache(async_function):
     cache = redis.from_url(os.environ['REDIS_URL'])
 
     async def wrapped_function(*args, **kwargs):
-        name_and_args = (async_function.__name__,) + (arg for arg in args)
+        name_and_args = (async_function.__name__,) + tuple(arg for arg in args)
         key = _make_key(name_and_args, kwargs, False)
         cached_result = cache.get(key)
         if cached_result is not None:
