@@ -37,11 +37,7 @@ Write a new comment that looks like below (note that each statement starts with
 a new line):
 
 
-<<<<<<< HEAD
     club  (this line tells the bot that this comment is possibly a club)
-=======
-    club
->>>>>>> 7c710c7a64250bc30273ec2d82499013af7fb900
     REGION CODE ({regions})
     YOUR IGN (used by people to send a friend request)
     CLUB NAME
