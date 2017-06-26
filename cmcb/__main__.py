@@ -46,6 +46,7 @@ async def get_clubs_from_subreddit(submission_id):
     clubs_by_regions = {region: list() for region in league.REGIONS}
     for comment in top_level_comments:
         body = comment.body.split('\n')
+        print(body)
         comment_is_club = False
         if len(body) > 8:
             if (
