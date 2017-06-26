@@ -20,7 +20,7 @@ PLATFORMS = {
     'KR':   'KR',
     'LAN':  'LA1',
     'LAS':  'LA2',
-    'NA':   'NA',
+    'NA':   'NA1',
     'OCE':  'OC1',
     'TR':   'TR1',
     'RU':   'RU',
