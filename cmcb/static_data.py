@@ -27,7 +27,8 @@ Unfortunately, there are no clubs available for following regions at the moment
 
 TEXT_BOTTOM = '''\n\n----------\n
 ### How to **join a club**
-+ Find a club that you want to join
++ Find a club that you want to join in a table
++ Click on club name to go to the club owners comment
 + Add club owner to friends in League of legends
 + Ask club owner for a club invite
 
@@ -42,6 +43,7 @@ a new line):
     YOUR IGN (used by people to send a friend request)
     CLUB NAME
     CLUB TAG (leave '$' if you dont have one yet)
+    (optional) ADDITIONAL INFO (you can write anything you want here)
 
 
 For example:
@@ -49,9 +51,9 @@ For example:
 
     club
     EUW
-    ExampleName
-    Example club
-    Example tag
+    ExSummonerName
+    ExBestClub
+    ExTag
 
 
 If you did it correctly, your club will apear in the table of your clubs region
