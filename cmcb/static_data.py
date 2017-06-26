@@ -14,7 +14,7 @@ at the end of the post.\n\n--------\n
 '''
 
 TEXT_REGION_TABLE = '''
-\n# Available {region} clubs:
+\n## Available **{region}** clubs:
 Club name|Club tag|Owner IGN|Last time online
 :--------|:-------|:--------|:---------------
 '''
@@ -26,13 +26,13 @@ Unfortunately, there are no clubs available for following regions at the moment
 : {empty_regions}\n'''
 
 TEXT_BOTTOM = '''\n\n----------\n
-## How to **join a club**
+### How to **join a club**
 + Find a club that you want to join
 + Add club owner to friends in League of legends
 + Ask club owner for a club invite
 
 
-## How to **add your club** to a list
+### How to **add your club** to a list
 Write a new comment that looks like an example below:
 
 
