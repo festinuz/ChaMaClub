@@ -82,8 +82,8 @@ class AsyncRateLeagueAPI:
         output = str()
         revision_date = await self.get_summoner_revison_date(region, summoner)
         print('Got revision date: ', revision_date)
-        revision_date = int(revision_date)
         if revision_date is not None:
+            revision_date = int(revision_date)
             revision_date /= 1000
             days_ago = int((time() - revision_date)//static_data.DAY)
             if days_ago == 0:
