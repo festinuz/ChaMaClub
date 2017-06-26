@@ -72,7 +72,7 @@ async def get_clubs_from_subreddit(submission_id):
 def create_updated_text(subreddit, clubs_by_regions):
     updated_text = static_data.TEXT_HEAD
     empty_regions = list()
-    for region, clubs in clubs_by_regions.items():
+    for region, clubs in sorted(clubs_by_regions.items(), key=lambda x: x[0]):
         if len(clubs):
             updated_text += static_data.TEXT_REGION_TABLE.format(region=region)
             updated_text += ''.join([str(club) for club in clubs])
@@ -80,10 +80,10 @@ def create_updated_text(subreddit, clubs_by_regions):
             empty_regions.append(region)
     if len(empty_regions):
         updated_text += static_data.TEXT_EMPTY_REGIONS.format(
-          empty_regions=', '.join(region for region in empty_regions))
+          empty_regions=', '.join(region for region in sorted(empty_regions)))
     updated_text += static_data.TEXT_BOTTOM
     updated_text = updated_text.format(
-      subreddit=subreddit, regions=', '.join(league.REGIONS),
+      subreddit=subreddit, regions=', '.join(sorted(league.REGIONS)),
       redditRevision=static_data.REDDIT_UPDATE_TIMEOUT,
       leagueRevision=static_data.LEAGUE_UPDATE_TIMEOUT//static_data.MINUTE)
     return updated_text
