@@ -33,20 +33,29 @@ TEXT_BOTTOM = '''\n\n----------\n
 
 
 ### How to **add your club** to a list
-Write a new comment that looks like an example below:
+Write a new comment that looks like below (note that each statement starts with
+a new line):
 
 
     club
-
     REGION CODE ({regions})
-
     YOUR IGN (used by people to send a friend request)
-
     CLUB NAME
-
     CLUB TAG (leave '$' if you dont have one yet)
 
 
+For example:
+
+
+    club
+    EUW
+    ExampleName
+    Example club
+    Example tag
+
+
+If you did it correctly, your club will apear in the table of your clubs region
+in {redditRevision} seconds.
 You can always update club information by updating your comment, as well as you
 can delete your comment when your club is full.
 \n--------\n
