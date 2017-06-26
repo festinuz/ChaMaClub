@@ -1,4 +1,5 @@
 import os
+import json
 import asyncio
 
 import league
@@ -6,6 +7,8 @@ import reddit
 import static_data
 
 
+SUBREDDITS = json.loads(os.environ['SUBREDDITS'])
+print(f'Subreddits loaded: {SUBREDDITS}')
 league_api = league.AsyncRateLeagueAPI(api_key=os.environ['RIOT_API_KEY'])
 reddit_api = reddit.RateRedditAPI(client_id=os.environ['CLIENT_ID'],
                                   client_secret=os.environ['CLIENT_SECRET'],
@@ -86,7 +89,7 @@ def create_updated_text(subreddit, clubs_by_regions):
 
 
 async def update_subreddit(subreddit):
-    submission_id = static_data.SUBREDDITS[subreddit]
+    submission_id = SUBREDDITS[subreddit]
     clubs_by_regions = await get_clubs_from_subreddit(submission_id)
     updated_text = create_updated_text(subreddit, clubs_by_regions)
     await reddit_api.edit_submission(submission_id, updated_text)
@@ -99,7 +102,7 @@ def update_subreddits(subreddits):
 
 async def main():
     while True:
-        await asyncio.gather(update_subreddits(static_data.SUBREDDITS),
+        await asyncio.gather(update_subreddits(SUBREDDITS),
                              asyncio.sleep(static_data.REDDIT_UPDATE_TIMEOUT))
 
 
