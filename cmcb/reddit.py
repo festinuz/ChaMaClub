@@ -1,7 +1,7 @@
 import praw
 
 
-MARKDOWN_CHARACTERS = '*+-_~#^=`[]()>'
+MARKDOWN_CHARACTERS = '*+-_~#^=`[]()>/'
 
 
 def escape_markdown(string):
