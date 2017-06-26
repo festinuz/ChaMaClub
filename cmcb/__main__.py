@@ -45,7 +45,7 @@ async def get_clubs_from_subreddit(submission_id):
     top_level_comments = await reddit_api.get_top_level_comments(submission_id)
     clubs_by_regions = {region: list() for region in league.REGIONS}
     for comment in top_level_comments:
-        body = [i for i in comment.body.split('\n') if i != '']
+        body = [i.strip() for i in comment.body.split('\n') if i != '']
         print(body)
         comment_is_club = False
         if len(body) >= 5:
