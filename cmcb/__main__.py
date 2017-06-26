@@ -45,21 +45,21 @@ async def get_clubs_from_subreddit(submission_id):
     top_level_comments = await reddit_api.get_top_level_comments(submission_id)
     clubs_by_regions = {region: list() for region in league.REGIONS}
     for comment in top_level_comments:
-        body = comment.body.split('\n')
+        body = [i for i in comment.body.split('\n') if i != '']
         print(body)
         comment_is_club = False
-        if len(body) > 8:
+        if len(body) >= 5:
             if (
                     body[0].lower() == 'club' and
-                    body[2].upper() in league.REGIONS and
-                    len(body[4]) < 20 and
-                    len(body[6]) < 26 and
-                    2 < len(body[8]) < 6 or body[8] in ['-', '$']):
+                    body[1].upper() in league.REGIONS and
+                    len(body[2]) < 20 and
+                    len(body[3]) < 26 and
+                    2 < len(body[4]) < 6 or body[4] in ['-', '$']):
                 comment_is_club = True
         if comment_is_club:
-            new_club = Club.create(body[2], body[4], body[6], body[8],
+            new_club = Club.create(body[1], body[2], body[3], body[4],
                                    comment.permalink())
-            clubs_by_regions[body[2]].append(new_club)
+            clubs_by_regions[body[1].append(new_club)
     temp = [asyncio.gather(*clubs) for reg, clubs in clubs_by_regions.items()]
     region_clubs = await asyncio.gather(*temp)
     clubs_by_regions = {region: list() for region in league.REGIONS}
