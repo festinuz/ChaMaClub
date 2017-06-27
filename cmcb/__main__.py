@@ -103,9 +103,8 @@ async def update_subreddit(subreddit):
 
 
 @utils.logging(static_data.LOG_SUBREDDIT_UPDATES)
-def update_subreddits(subreddits):
-    output = asyncio.gather(*[update_subreddit(sub) for sub in subreddits])
-    return output
+async def update_subreddits(subreddits):
+    return await asyncio.gather(*[update_subreddit(sub) for sub in subreddits])
 
 
 async def main():
