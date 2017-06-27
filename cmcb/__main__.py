@@ -93,7 +93,7 @@ def create_updated_text(subreddit, clubs_by_regions):
     return updated_text
 
 
-@utils.logging(static_data.DEBUG_SUBREDDIT_UPDATE)
+@utils.logging(static_data.LOG_SUBREDDIT_UPDATES)
 async def update_subreddit(subreddit):
     submission_id = SUBREDDITS[subreddit]
     clubs_by_regions, tlc, rc = await get_clubs_from_subreddit(submission_id)
@@ -102,7 +102,6 @@ async def update_subreddit(subreddit):
     return f'{subreddit}:{submission_id} updated. TLC: {tlc}, RC: {rc}'
 
 
-@utils.logging(static_data.LOG_SUBREDDIT_UPDATES)
 async def update_subreddits(subreddits):
     return await asyncio.gather(*[update_subreddit(sub) for sub in subreddits])
 

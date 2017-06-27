@@ -10,7 +10,6 @@ WEEK = 7*DAY
 
 # Logging
 LOG_SUBREDDIT_UPDATES = bool(os.environ.get('LOG_SUBREDDIT_UPDATES', False))
-DEBUG_SUBREDDIT_UPDATE = bool(os.environ.get('DEBUG_SUBREDDIT_UPDATE', False))
 DEBUG_CLUB_PARSER = bool(os.environ.get('DEBUG_CLUB_PARSER', False))
 
 # Reddit
