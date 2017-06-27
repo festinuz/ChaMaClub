@@ -101,18 +101,20 @@ async def update_subreddit(subreddit):
     return f'{subreddit}:{submission_id} updated. TLC: {tlc}, RC: {rc}'
 
 
-async def update_subreddits(subreddits):
-    return await asyncio.gather(*[update_subreddit(sub) for sub in subreddits])
+async def update_subreddits(loop, subreddits):
+    delay = static_data.REDDIT_TO_PER_SUB
+    for i, subreddit in enumerate(subreddits):
+        loop.call_later(1+i*delay, update_subreddit, subreddit)
 
 
-async def main():
+async def main(loop):
     while True:
-        await asyncio.gather(update_subreddits(SUBREDDITS),
+        await asyncio.gather(update_subreddits(loop, SUBREDDITS),
                              asyncio.sleep(static_data.REDDIT_UPDATE_TIMEOUT))
 
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    loop.run_until_complete(main(loop))
     # pending = asyncio.Task.all_tasks()
     # loop.run_until_complete(asyncio.gather(*pending))
