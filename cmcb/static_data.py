@@ -19,7 +19,7 @@ REDDIT_TO_PER_SUB = 10*SECOND
 REDDIT_UPDATE_TIMEOUT = max(MINUTE, len(REDDIT_SUBREDDITS)*REDDIT_TO_PER_SUB)
 
 # League
-LEAGUE_UPDATE_TIMEOUT = HOUR
+LEAGUE_UPDATE_TIMEOUT = HOUR  # used by cache function as key expiration time
 
 # Submission
 TEXT_HEAD = '''
