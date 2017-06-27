@@ -18,6 +18,7 @@ class RateRedditAPI:
 
     async def get_top_level_comments(self, submission_id):
         submission = self._reddit.submission(id=submission_id)
+        submission.comments.replace_more(limit=None)
         return submission.comments
 
     async def edit_submission(self, submission_id, updated_text):
