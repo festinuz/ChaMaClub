@@ -10,7 +10,7 @@ import static_data
 
 API_URL_BASE = 'https://{platform}.api.riotgames.com/{api_url}'
 REGIONS = {'BR', 'EUNE', 'EUW', 'JP', 'KR', 'LAN', 'LAS', 'NA', 'OCE', 'TR',
-           'RU', 'PBE'}
+           'RU'}
 
 PLATFORMS = {
     'BR':   'BR1',
@@ -24,7 +24,6 @@ PLATFORMS = {
     'OCE':  'OC1',
     'TR':   'TR1',
     'RU':   'RU',
-    'PBE':  'PBE1',
 }
 
 
