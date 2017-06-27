@@ -43,10 +43,10 @@ class Club:
 
 async def get_clubs_from_subreddit(submission_id):
     top_level_comments = await reddit_api.get_top_level_comments(submission_id)
+    tlc = len(top_level_comments)
     clubs_by_regions = {region: list() for region in league.REGIONS}
     for comment in top_level_comments:
         body = [i.strip() for i in comment.body.split('\n') if i != '']
-        print(body)
         comment_is_club = False
         if len(body) >= 5:
             if (
@@ -63,10 +63,12 @@ async def get_clubs_from_subreddit(submission_id):
     temp = [asyncio.gather(*clubs) for reg, clubs in clubs_by_regions.items()]
     region_clubs = await asyncio.gather(*temp)
     clubs_by_regions = {region: list() for region in league.REGIONS}
+    total = 0
     for clubs in region_clubs:
         for club in clubs:
             clubs_by_regions[club.region].append(club)
-    return clubs_by_regions
+            total += 1
+    return clubs_by_regions, tlc, total
 
 
 def create_updated_text(subreddit, clubs_by_regions):
@@ -91,10 +93,10 @@ def create_updated_text(subreddit, clubs_by_regions):
 
 async def update_subreddit(subreddit):
     submission_id = SUBREDDITS[subreddit]
-    clubs_by_regions = await get_clubs_from_subreddit(submission_id)
+    clubs_by_regions, tlc, rc = await get_clubs_from_subreddit(submission_id)
     updated_text = create_updated_text(subreddit, clubs_by_regions)
     await reddit_api.edit_submission(submission_id, updated_text)
-    print(f'Subreddit {subreddit} updated.')
+    print(f'Subreddit {subreddit} updated. TLC: {tlc}, RC: {rc}')
 
 
 def update_subreddits(subreddits):

@@ -39,7 +39,6 @@ def time_based_async_cache(async_method):
             return cached_result.decode('utf-8')
         result = await async_method(self, *args, **kwargs)
         cache.setex(key, result, static_data.LEAGUE_UPDATE_TIMEOUT)
-        print('Setting revisionDate:', result)
         return result
     return wrapped_method
 
@@ -81,7 +80,6 @@ class AsyncRateLeagueAPI:
     async def get_revision(self, region, summoner):
         output = str()
         revision_date = await self.get_summoner_revison_date(region, summoner)
-        print('Got revision date: ', revision_date)
         if revision_date not in ['None', None]:
             revision_date = int(revision_date)
             revision_date /= 1000
