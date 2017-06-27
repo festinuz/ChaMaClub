@@ -64,5 +64,5 @@ can delete your comment when your club is full.
 At the moment, the bot is set to update the post every {redditRevision}
 seconds. The "Last time online" column updates every {leagueRevision} minutes.
 The bot is currently hosted on Heroku and should be working 24/7! **If you have
-a suggestion, feature request or a problem, [send a PM to me](/u/festinuz)!
+a suggestion, feature request or a problem, [send a PM to me](/u/festinuz)!**
 '''
