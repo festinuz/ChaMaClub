@@ -4,7 +4,7 @@ from functools import wraps, _make_key
 import redis
 
 
-def logging(triggers, out=sys.stdout):
+def logging(*triggers, out=sys.stdout):
     """Will log function if all triggers are True"""
     log = min(triggers)  # will be False if any trigger is false
 
