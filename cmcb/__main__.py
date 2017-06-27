@@ -103,8 +103,8 @@ async def update_subreddit(subreddit):
 
 async def update_subreddits(loop, subreddits):
     delay = static_data.REDDIT_TO_PER_SUB
-    for i, subreddit in enumerate(subreddits):
-        loop.call_later(1+i*delay, update_subreddit, subreddit)
+    for subreddit in subreddits:
+        await asyncio.gather(update_subreddit(subreddit), asyncio.sleep(delay))
 
 
 async def main(loop):
