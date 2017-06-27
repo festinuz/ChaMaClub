@@ -1,12 +1,11 @@
 import os
 import asyncio
 from time import time
-from functools import _make_key
 
 import aiohttp
-import redis
 
 import static_data
+import utils
 
 API_URL_BASE = 'https://{platform}.api.riotgames.com/{api_url}'
 REGIONS = {'BR', 'EUNE', 'EUW', 'JP', 'KR', 'LAN', 'LAS', 'NA', 'OCE', 'TR',
@@ -25,21 +24,6 @@ PLATFORMS = {
     'TR':   'TR1',
     'RU':   'RU',
 }
-
-
-def time_based_async_cache(async_method):
-    cache = redis.from_url(os.environ['REDIS_URL'])
-
-    async def wrapped_method(self, *args, **kwargs):
-        name_and_args = (async_method.__name__,) + tuple(arg for arg in args)
-        key = _make_key(name_and_args, kwargs, False)
-        cached_result = cache.get(key)
-        if cached_result is not None:
-            return cached_result.decode('utf-8')
-        result = await async_method(self, *args, **kwargs)
-        cache.setex(key, result, static_data.LEAGUE_UPDATE_TIMEOUT)
-        return result
-    return wrapped_method
 
 
 class AsyncRateLeagueAPI:
@@ -68,7 +52,8 @@ class AsyncRateLeagueAPI:
         url = '/lol/summoner/v3/summoners/by-name/{summonerName}'
         return self._request(url, region, summonerName=summoner_name)
 
-    @time_based_async_cache
+    @utils.redis_timeout_async_method_cache(static_data.LEAGUE_UPDATE_TIMEOUT,
+                                            os.environ['REDIS_URL'])
     async def get_summoner_revison_date(self, region, summoner):
         summoner = await self.get_summoner_by_name(region, summoner)
         try:
