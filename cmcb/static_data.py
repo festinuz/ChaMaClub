@@ -1,4 +1,5 @@
 import os
+import json
 
 
 # General
@@ -13,7 +14,9 @@ LOG_SUBREDDIT_UPDATES = bool(os.environ.get('LOG_SUBREDDIT_UPDATES', False))
 DEBUG_CLUB_PARSER = bool(os.environ.get('DEBUG_CLUB_PARSER', False))
 
 # Reddit
-REDDIT_UPDATE_TIMEOUT = MINUTE
+REDDIT_SUBREDDITS = json.loads(os.environ['SUBREDDITS'])
+REDDIT_TO_PER_SUB = 10*SECOND
+REDDIT_UPDATE_TIMEOUT = max(MINUTE, len(REDDIT_SUBREDDITS)*REDDIT_TO_PER_SUB)
 
 # League
 LEAGUE_UPDATE_TIMEOUT = HOUR

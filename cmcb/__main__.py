@@ -1,5 +1,4 @@
 import os
-import json
 import asyncio
 
 import league
@@ -8,7 +7,7 @@ import static_data
 import utils
 
 
-SUBREDDITS = json.loads(os.environ['SUBREDDITS'])
+SUBREDDITS = static_data.REDDIT_SUBREDDITS
 print(f'Subreddits loaded: {SUBREDDITS}')
 league_api = league.AsyncRateLeagueAPI(api_key=os.environ['RIOT_API_KEY'])
 reddit_api = reddit.RateRedditAPI(client_id=os.environ['CLIENT_ID'],
