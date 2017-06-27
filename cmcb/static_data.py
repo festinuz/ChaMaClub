@@ -14,11 +14,17 @@ LOG_SUBREDDIT_UPDATES = bool(os.environ.get('LOG_SUBREDDIT_UPDATES', False))
 DEBUG_CLUB_PARSER = bool(os.environ.get('DEBUG_CLUB_PARSER', False))
 
 # Reddit
+REDDIT_CLIENT_ID = os.environ['REDDIT_CLIENT_ID']
+REDDIT_CLIENT_SECRET = os.environ['REDDIT_CLIENT_SECRET']
+REDDIT_USER_AGENT = os.environ['REDDIT_USER_AGENT']
+REDDIT_USERNAME = os.environ['REDDIT_USERNAME']
+REDDIT_PASSWORD = os.environ['REDDIT_PASSWORD']
 REDDIT_SUBREDDITS = json.loads(os.environ['SUBREDDITS'])
 REDDIT_TO_PER_SUB = 10*SECOND
 REDDIT_UPDATE_TIMEOUT = max(MINUTE, len(REDDIT_SUBREDDITS)*REDDIT_TO_PER_SUB)
 
 # League
+LEAGUE_API_KEY = os.environ['LEAGUE_API_KEY']
 LEAGUE_UPDATE_TIMEOUT = HOUR  # used by cache function as key expiration time
 
 # Submission

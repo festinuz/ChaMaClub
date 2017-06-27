@@ -1,4 +1,3 @@
-import os
 import asyncio
 
 import league
@@ -9,12 +8,13 @@ import utils
 
 SUBREDDITS = static_data.REDDIT_SUBREDDITS
 print(f'Subreddits loaded: {SUBREDDITS}')
-league_api = league.AsyncRateLeagueAPI(api_key=os.environ['RIOT_API_KEY'])
-reddit_api = reddit.RateRedditAPI(client_id=os.environ['CLIENT_ID'],
-                                  client_secret=os.environ['CLIENT_SECRET'],
-                                  user_agent=os.environ['USER_AGENT'],
-                                  username=os.environ['USERNAME'],
-                                  passwd=os.environ['PASSWORD'])
+league_api = league.AsyncRateLeagueAPI(static_data.LEAGUE_API_KEY)
+reddit_api = reddit.RateRedditAPI(
+        client_id=static_data.REDDIT_CLIENT_ID,
+        client_secret=static_data.REDDIT_CLIENT_SECRET,
+        user_agent=static_data.REDDIT_USER_AGENT,
+        username=static_data.REDDIT_USERNAME,
+        passwd=static_data.REDDIT_PASSWORD)
 
 
 class Club:
@@ -116,5 +116,3 @@ async def main(loop):
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main(loop))
-    # pending = asyncio.Task.all_tasks()
-    # loop.run_until_complete(asyncio.gather(*pending))
