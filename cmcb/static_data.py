@@ -1,12 +1,25 @@
+import os
+
+
+# General
 SECOND = 1
 MINUTE = 60*SECOND
 HOUR = 60*MINUTE
 DAY = 24*HOUR
 WEEK = 7*DAY
 
+# Logging
+LOG_SUBREDDIT_UPDATES = os.environ.get('LOG_SUBREDDIT_UPDATES', False)
+DEBUG_SUBREDDIT_UPDATE = os.environ.get('DEBUG_SUBREDDIT_UPDATE', False)
+DEBUG_CLUB_PARSER = os.environ.get('DEBUG_CLUB_PARSER', False)
+
+# Reddit
 REDDIT_UPDATE_TIMEOUT = MINUTE
+
+# League
 LEAGUE_UPDATE_TIMEOUT = HOUR
 
+# Submission
 TEXT_HEAD = '''
 Hello, /r/{subreddit}! This post updates automatically to help you find
 desired club or fill your club with some folks! You can find additional info

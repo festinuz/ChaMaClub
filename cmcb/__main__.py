@@ -5,6 +5,7 @@ import asyncio
 import league
 import reddit
 import static_data
+import utils
 
 
 SUBREDDITS = json.loads(os.environ['SUBREDDITS'])
@@ -41,6 +42,7 @@ class Club:
           self.revision)
 
 
+@utils.logging(static_data.DEBUG_CLUB_PARSER)
 async def get_clubs_from_subreddit(submission_id):
     top_level_comments = await reddit_api.get_top_level_comments(submission_id)
     tlc = len(top_level_comments)
@@ -91,16 +93,19 @@ def create_updated_text(subreddit, clubs_by_regions):
     return updated_text
 
 
+@utils.logging(static_data.DEBUG_SUBREDDIT_UPDATE)
 async def update_subreddit(subreddit):
     submission_id = SUBREDDITS[subreddit]
     clubs_by_regions, tlc, rc = await get_clubs_from_subreddit(submission_id)
     updated_text = create_updated_text(subreddit, clubs_by_regions)
     await reddit_api.edit_submission(submission_id, updated_text)
-    print(f'Subreddit {subreddit} updated. TLC: {tlc}, RC: {rc}')
+    return f'{subreddit}:{submission_id} updated. TLC: {tlc}, RC: {rc}'
 
 
+@utils.logging(static_data.LOG_SUBREDDIT_UPDATES)
 def update_subreddits(subreddits):
-    return asyncio.gather(*[update_subreddit(sub) for sub in subreddits])
+    output = asyncio.gather(*[update_subreddit(sub) for sub in subreddits])
+    return output
 
 
 async def main():
