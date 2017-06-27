@@ -15,7 +15,7 @@ def logging(*triggers, out=sys.stdout):
                 print('calling', function.__name__, args, kwargs, file=out)
             result = function(*args, **kwargs)
             if log:
-                print('result', function.__name__, args, kwargs, file=out)
+                print('result', function.__name__, result, file=out)
             return result
         return wrapped_function
     return wrapper
