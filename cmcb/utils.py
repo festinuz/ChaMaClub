@@ -1,4 +1,5 @@
 import sys
+import inspect
 from functools import wraps, _make_key
 
 import redis
@@ -11,14 +12,29 @@ def logging(*triggers, out=sys.stdout):
     def wrapper(function):
         @wraps(function)
         def wrapped_function(*args, **kwargs):
-            if log:
-                print('calling', function.__name__, args, kwargs, file=out)
             result = function(*args, **kwargs)
             if log:
-                print('result', function.__name__, result, file=out)
+                print(function.__name__, args, kwargs, result, file=out)
             return result
         return wrapped_function
-    return wrapper
+
+    def async_wrapper(async_function):
+        @wraps(async_function)
+        async def wrapped_async_function(*args, **kwargs):
+            result = await async_function(*args, **kwargs)
+            if log:
+                print(async_function.__name__, args, kwargs, result, file=out)
+            return result
+        return wrapped_async_function
+
+    def cool_wrapper(function):
+        is_async_function = inspect.iscoroutinefunction(function)
+        if is_async_function:
+            return async_wrapper(function)
+        else:
+            return wrapper(function)
+
+    return cool_wrapper
 
 
 def redis_timeout_async_method_cache(timeout, redis_url):
