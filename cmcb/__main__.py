@@ -92,7 +92,7 @@ def create_updated_text(subreddit, clubs_by_regions):
         updated_text += static_data.TEXT_EMPTY_REGIONS.format(
           empty_regions=', '.join(region for region in sorted(empty_regions)))
     updated_text += static_data.TEXT_BOTTOM
-    updated_text = updated_text.format(Default(
+    updated_text = updated_text.format_map(Default(
       subreddit=subreddit, regions=', '.join(sorted(league.REGIONS)),
       redditRevision=static_data.REDDIT_UPDATE_TIMEOUT,
       leagueRevision=static_data.LEAGUE_UPDATE_TIMEOUT//static_data.MINUTE))
