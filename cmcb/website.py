@@ -23,4 +23,4 @@ async def init(loop):
     app.router.add_route('Get', '/about', about)
     templates_path = 'cmcb/templates'
     aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(templates_path))
-    await loop.create_server(app.make_handler(), '127.0.0.1', PORT)
+    await loop.create_server(app.make_handler(), '0.0.0.0', PORT)
