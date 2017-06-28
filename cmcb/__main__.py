@@ -9,7 +9,7 @@ import website
 
 class Default(dict):
     def __missing__(self, key):
-        return key
+        return '{' + key + '}'
 
 
 SUBREDDITS = static_data.REDDIT_SUBREDDITS
