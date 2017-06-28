@@ -7,6 +7,11 @@ import utils
 import website
 
 
+class Default(dict):
+    def __missing__(self, key):
+        return key
+
+
 SUBREDDITS = static_data.REDDIT_SUBREDDITS
 print(f'Subreddits loaded: {SUBREDDITS}')
 league_api = league.AsyncRateLeagueAPI(static_data.LEAGUE_API_KEY)
@@ -87,10 +92,10 @@ def create_updated_text(subreddit, clubs_by_regions):
         updated_text += static_data.TEXT_EMPTY_REGIONS.format(
           empty_regions=', '.join(region for region in sorted(empty_regions)))
     updated_text += static_data.TEXT_BOTTOM
-    updated_text = updated_text.format(
+    updated_text = updated_text.format(Default(
       subreddit=subreddit, regions=', '.join(sorted(league.REGIONS)),
       redditRevision=static_data.REDDIT_UPDATE_TIMEOUT,
-      leagueRevision=static_data.LEAGUE_UPDATE_TIMEOUT//static_data.MINUTE)
+      leagueRevision=static_data.LEAGUE_UPDATE_TIMEOUT//static_data.MINUTE))
     return updated_text
 
 
