@@ -1,3 +1,5 @@
 praw
 aiohttp
 redis
+jinja2
+aiohttp_jinja2

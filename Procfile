@@ -1,1 +1,1 @@
-bot: python cmcb/__main__.py
+web: python cmcb/__main__.py

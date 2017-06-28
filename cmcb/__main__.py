@@ -4,6 +4,7 @@ import league
 import reddit
 import static_data
 import utils
+import website
 
 
 SUBREDDITS = static_data.REDDIT_SUBREDDITS
@@ -108,6 +109,7 @@ async def update_subreddits(loop, subreddits):
 
 
 async def main(loop):
+    await website.init()
     while True:
         await asyncio.gather(update_subreddits(loop, SUBREDDITS),
                              asyncio.sleep(static_data.REDDIT_UPDATE_TIMEOUT))

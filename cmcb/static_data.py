@@ -13,6 +13,9 @@ WEEK = 7*DAY
 LOG_SUBREDDIT_UPDATES = bool(os.environ.get('LOG_SUBREDDIT_UPDATES', False))
 DEBUG_CLUB_PARSER = bool(os.environ.get('DEBUG_CLUB_PARSER', False))
 
+# Website
+WEBSITE_PORT = os.environ.get('PORT', None) or 8080
+
 # Reddit
 REDDIT_CLIENT_ID = os.environ['REDDIT_CLIENT_ID']
 REDDIT_CLIENT_SECRET = os.environ['REDDIT_CLIENT_SECRET']
