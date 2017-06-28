@@ -26,12 +26,12 @@ class Club:
 
     def __init__(self, region, summoner_name, club_name, club_tag, link):
         self.region = region.upper()
-        self.owner = reddit.escape_markdown(summoner_name)
-        self.club = reddit.escape_markdown(club_name)
+        self.owner = utils.escape_reddit_markdown(summoner_name)
+        self.club = utils.escape_reddit_markdown(club_name)
         if club_tag in ['-', '$']:
             self.tag = '*No tag yet!*'
         else:
-            self.tag = reddit.escape_markdown(club_tag)
+            self.tag = utils.escape_reddit_markdown(club_tag)
         self.permalink = link
         self.opgg = f'https://{region}.op.gg/summoner/userName={summoner_name}'
 
