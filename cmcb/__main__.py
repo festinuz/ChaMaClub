@@ -73,6 +73,7 @@ async def get_clubs_from_subreddit(submission_id):
     return clubs_by_regions, tlc, total
 
 
+@utils.logging(static_data.DEBUG_CLUB_PARSER)
 def create_updated_text(subreddit, clubs_by_regions):
     updated_text = static_data.TEXT_HEAD
     empty_regions = list()
