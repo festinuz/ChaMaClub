@@ -35,6 +35,7 @@ class HerokuWebsite:
             HerokuWebsite.__keep_awake_callback.cancel()
             HerokuWebsite.__keep_awake_callback = None
         app = aiohttp.web.Application(loop=loop)
+        app.router.add_static('/static', 'cmcb/templates')
         for request_type, route, handler in HerokuWebsite.__routes:
             app.router.add_route(request_type, route, handler)
         aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(TEMPLATES))
