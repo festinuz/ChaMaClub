@@ -9,6 +9,7 @@ import static_data
 
 PORT = static_data.WEBSITE_PORT
 TEMPLATES = static_data.WEBSITE_TEMPLATES_PATH
+g_app = None
 
 
 class HerokuWebsite:
@@ -37,6 +38,8 @@ class HerokuWebsite:
         app = aiohttp.web.Application(loop=loop)
         for request_type, route, handler in HerokuWebsite.__routes:
             app.router.add_route(request_type, route, handler)
+        app.router.add_static('/static', 'static', name='static')
+        g_app = app # Temporary workaroud to see if it works
         aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(TEMPLATES))
         server = await loop.create_server(app.make_handler(), '0.0.0.0', PORT)
         HerokuWebsite.__server = server
