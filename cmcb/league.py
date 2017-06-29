@@ -52,7 +52,7 @@ class AsyncRateLeagueAPI:
         return self._request(url, region, summonerName=summoner_name)
 
     @utils.redis_timeout_cache(static_data.REDIS_URL,
-                                static_data.LEAGUE_UPDATE_TIMEOUT)
+                               static_data.LEAGUE_UPDATE_TIMEOUT)
     async def get_summoner_revison_date(self, region, summoner):
         summoner = await self.get_summoner_by_name(region, summoner)
         try:
