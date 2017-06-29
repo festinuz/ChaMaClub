@@ -115,10 +115,12 @@ async def update_subreddits(loop, subreddits):
 
 
 async def main(loop):
-    await website.init(loop)
+    await website.HerokuWebsite.start()
     while True:
-        await asyncio.gather(update_subreddits(loop, SUBREDDITS),
-                             asyncio.sleep(static_data.REDDIT_UPDATE_TIMEOUT))
+        await asyncio.gather(
+            update_subreddits(loop, SUBREDDITS),
+            asyncio.sleep(static_data.REDDIT_UPDATE_TIMEOUT),
+            website.HerokuWebsite.keep_awake(static_data.WEBSITE_URL))
 
 
 if __name__ == '__main__':

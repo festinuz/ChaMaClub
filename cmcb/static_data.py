@@ -15,6 +15,8 @@ DEBUG_CLUB_PARSER = bool(os.environ.get('DEBUG_CLUB_PARSER', False))
 
 # Website
 WEBSITE_PORT = os.environ.get('PORT', None) or 8080
+WEBSITE_URL = 'https://chamaclubs.herokuapp.com/'
+WEBSITE_TEMPLATES_PATH = 'cmcb/templates'
 
 # Reddit
 REDDIT_CLIENT_ID = os.environ['REDDIT_CLIENT_ID']
