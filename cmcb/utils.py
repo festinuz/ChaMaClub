@@ -7,6 +7,14 @@ import redis
 import static_data
 
 
+class DefaultSafeDict:
+    """Should be used instead of dict() in string.format_map function with any
+    string in contents of which you are unsure in order to escape curly
+    brackets in formatted text. For example, if string contains line, entered
+    by user - it can possibly contain {}, which will break string.format()"""
+    def __missing__(self, key):
+        return '{' + key + '}'
+
 def escape_reddit_markdown(string):
     for charater in static_data.REDDIT_MARKDOWN_CHARACTERS:
         string = string.replace(charater, '\\'+charater)
