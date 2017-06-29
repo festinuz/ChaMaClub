@@ -56,8 +56,8 @@ def logging(*triggers, out=sys.stdout):
 
 def redis_timeout_cache(redis_url, timeout):
     """If you use this cache on object methods, make sure that this object has
-    a defined __str__ so it can be consistently represented between application
-    restarts."""
+    a defined __repr__ so it can be consistently represented between
+    application restarts."""
     def wrapper(function):
         cache = redis.from_url(redis_url)
         is_async = inspect.iscoroutinefunction(function)
