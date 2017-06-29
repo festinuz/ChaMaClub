@@ -11,7 +11,8 @@ TEMPLATES = static_data.WEBSITE_TEMPLATES_PATH
 
 class HerokuWebsite:
     """Since heroku only allows for single website per application, this class
-    is a singleton"""
+    is singleton-like and is used to get all revelant functions under one
+    namespace."""
     __server = None
     __routes = list()
     __keep_awake_callback = None
