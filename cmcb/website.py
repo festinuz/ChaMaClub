@@ -65,8 +65,3 @@ async def home(request):
       'subreddits_len': len(static_data.REDDIT_SUBREDDITS),
       'update_time': int(static_data.REDDIT_UPDATE_TIMEOUT)}
     return aiohttp_jinja2.render_template("index.html", request, context)
-
-
-@HerokuWebsite.route('Get', '/riot.txt')
-async def helo_rito(request):
-    return aiohttp_jinja2.render_template("riot.txt", request, dict())
