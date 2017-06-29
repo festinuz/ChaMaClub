@@ -13,6 +13,9 @@ WEEK = 7*DAY
 LOG_SUBREDDIT_UPDATES = bool(os.environ.get('LOG_SUBREDDIT_UPDATES', False))
 DEBUG_CLUB_PARSER = bool(os.environ.get('DEBUG_CLUB_PARSER', False))
 
+# Cache
+REDIS_URL = os.environ['REDIS_URL']
+
 # Website
 WEBSITE_PORT = os.environ.get('PORT', None) or 8080
 WEBSITE_URL = 'https://chamaclubs.herokuapp.com/'

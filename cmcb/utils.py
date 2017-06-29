@@ -54,19 +54,41 @@ def logging(*triggers, out=sys.stdout):
     return cool_wrapper
 
 
-def redis_timeout_async_method_cache(timeout, redis_url):
-    def wrapper(async_method):
+def redis_timeout_cache(redis_url, timeout):
+    def wrapper(function):
         cache = redis.from_url(redis_url)
+        is_method = inspect.ismethod(function)
+        is_async = inspect.iscoroutinefunction(function)
 
-        @wraps(async_method)
-        async def wrapped_method(self, *args, **kwargs):
-            name_and_args = (async_method.__name__,) + tuple(a for a in args)
+        def get_cached_result(*args, **kwargs):
+            args = args[1:] if is_method else args  # remove self. from args
+            name_and_args = (function.__name__) + tuple(arg for arg in args)
             key = _make_key(name_and_args, kwargs, False)
             cached_result = cache.get(key)
+            return key, cached_result
+
+        @wraps(function)
+        def cached_function(*args, **kwargs):
+            key, cached_result = get_cached_result(*args, **kwargs)
             if cached_result is not None:
                 return cached_result.decode('utf-8')
-            result = await async_method(self, *args, **kwargs)
-            cache.setex(key, result, timeout)
-            return result
-        return wrapped_method
+            else:
+                result = function(*args, **kwargs)
+                cache.setex(key, result, timeout)
+                return result
+
+        @wraps(function)
+        async def async_cached_function(*args, **kwargs):
+            key, cached_result = get_cached_result(*args, **kwargs)
+            if cached_result is not None:
+                return cached_result.decode('utf-8')
+            else:
+                result = await function(*args, **kwargs)
+                cache.setex(key, result, timeout)
+                return result
+
+        if is_async:
+            return async_cached_function
+        else:
+            return cached_function
     return wrapper
