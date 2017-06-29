@@ -1,3 +1,5 @@
+import asyncio
+
 import aiohttp
 import jinja2
 import aiohttp_jinja2
@@ -40,16 +42,20 @@ class HerokuWebsite:
         HerokuWebsite.__server = server
 
     @staticmethod
-    async def keep_awake(loop, url):
+    async def get(loop, url):
+        async with aiohttp.ClientSession(loop=loop) as client:
+            async with client.get(url) as response:
+                return await response.text()
+
+    @staticmethod
+    def keep_awake(loop, url):
         """Heroku web applications hosted on free dyno plan are going into
         sleep mode if they haven't been accessed in a hour.
         This function, called once, will send one GET request every 30 minutes,
         which will keep web app awake."""
         HerokuWebsite.__keep_awake_callback = loop.call_later(
             30*static_data.MINUTE, HerokuWebsite.keep_awake, loop, url)
-        async with aiohttp.ClientSession(loop=loop) as client:
-            async with client.get(url) as response:
-                return await response.text()
+        asyncio.ensure_future(HerokuWebsite.get(loop, url))
 
 
 @HerokuWebsite.route('GET', '/')
