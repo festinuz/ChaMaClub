@@ -43,21 +43,27 @@ class Club:
 
 
 @utils.logging(static_data.DEBUG_CLUB_PARSER)
+def is_valid_club(comment_body):
+    if len(comment_body) >= 5:
+        if (
+                comment_body[0].lower() == 'club' and
+                comment_body[1].upper() in league.REGIONS and
+                len(comment_body[2]) < 20 and
+                len(comment_body[3]) < 26 and
+                2 < len(comment_body[4]) < 6 or comment_body[4] in ['-', '$']):
+            return True
+        else:
+            return False
+
+
+@utils.logging(static_data.DEBUG_CLUB_PARSER)
 async def get_clubs_from_subreddit(submission_id):
     top_level_comments = await reddit_api.get_top_level_comments(submission_id)
     tlc = len(top_level_comments)
     clubs_by_regions = {region: list() for region in league.REGIONS}
     for comment in top_level_comments:
         body = [i.strip() for i in comment.body.split('\n') if i != '']
-        comment_is_club = False
-        if len(body) >= 5:
-            if (
-                    body[0].lower() == 'club' and
-                    body[1].upper() in league.REGIONS and
-                    len(body[2]) < 20 and
-                    len(body[3]) < 26 and
-                    2 < len(body[4]) < 6 or body[4] in ['-', '$']):
-                comment_is_club = True
+        comment_is_club = is_valid_club(body)
         if comment_is_club:
             new_club = Club.create(body[1], body[2], body[3], body[4],
                                    comment.permalink())
