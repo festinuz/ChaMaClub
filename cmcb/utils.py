@@ -10,8 +10,6 @@ import static_data
 def escape_reddit_markdown(string):
     for charater in static_data.REDDIT_MARKDOWN_CHARACTERS:
         string = string.replace(charater, '\\'+charater)
-    string.replace('\{', '\{\{')
-    string.replace('\}', '\}\}')
     return string
 
 
