@@ -61,4 +61,7 @@ class HerokuWebsite:
 
 @HerokuWebsite.route('GET', '/')
 async def home(request):
-    return aiohttp_jinja2.render_template("index.html", request, dict())
+    context = {
+      'subreddits_len': len(static_data.REDDIT_SUBREDDITS),
+      'update_time': int(static_data.REDDIT_UPDATE_TIMEOUT)}
+    return aiohttp_jinja2.render_template("index.html", request, context)
