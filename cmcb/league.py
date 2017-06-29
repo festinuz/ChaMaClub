@@ -30,6 +30,9 @@ class AsyncRateLeagueAPI:
         self.api_key = api_key
         self.session = aiohttp.ClientSession()
 
+    def __str__(self):
+        return 'ARLeagueAPI:{}'.format(self.api_key[-4:])
+
     async def _session_get_simple(self, url, params):
         async with self.session.get(url, params=params) as response:
             return await response.json()
