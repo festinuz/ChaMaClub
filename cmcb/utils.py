@@ -7,7 +7,7 @@ import redis
 import static_data
 
 
-class DefaultSafeDict:
+class DefaultSafeDict(dict):
     """Should be used instead of dict() in string.format_map function with any
     string in contents of which you are unsure in order to escape curly
     brackets in formatted text. For example, if string contains line, entered
