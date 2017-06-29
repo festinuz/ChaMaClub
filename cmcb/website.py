@@ -60,9 +60,6 @@ class HerokuWebsite:
 
 @HerokuWebsite.route('GET', '/')
 async def home(request):
-    return aiohttp_jinja2.render_template("home.html", request, dict())
-
-
-@HerokuWebsite.route('GET', '/about')
-async def about(request):
-    return aiohttp_jinja2.render_template("about.html", request, dict())
+    context = dict(update_time=int(static_data.REDDIT_UPDATE_TIMEOUT//60),
+                   subreddits_len=len(static_data.REDDIT_SUBREDDITS))
+    return aiohttp_jinja2.render_template("index.html", request, context)
