@@ -14,6 +14,7 @@ class HerokuWebsite:
     is a singleton"""
     __server = None
     __routes = list()
+    __keep_awake_callback = None
 
     @staticmethod
     def route(request_type, route):
@@ -27,6 +28,9 @@ class HerokuWebsite:
         if HerokuWebsite.__server is not None:
             HerokuWebsite.__server.close()
             await HerokuWebsite.__server.wait_closed()
+        if HerokuWebsite.__keep_awake_callback is not None:
+            HerokuWebsite.__keep_awake_callback.cancel()
+            HerokuWebsite.__keep_awake_callback = None
         app = aiohttp.web.Application(loop=loop)
         for request_type, route, handler in HerokuWebsite.__routes:
             app.router.add_route(request_type, route, handler)
@@ -37,9 +41,11 @@ class HerokuWebsite:
     @staticmethod
     async def keep_awake(loop, url):
         """Heroku web applications hosted on free dyno plan are going into
-        sleep mode if they haven't been accessed in a hour. To avoid this from
-        happening, this function should be called at least once a hour with
-        url being your heroku app url"""
+        sleep mode if they haven't been accessed in a hour.
+        This function, called once, will send one GET request every 30 minutes,
+        which will keep web app awake."""
+        HerokuWebsite.__keep_awake_callback = loop.call_later(
+            30*static_data.MINUTE, HerokuWebsite.keep_awake, loop, url)
         async with aiohttp.ClientSession(loop=loop) as client:
             async with client.get(url) as response:
                 return await response.text()
