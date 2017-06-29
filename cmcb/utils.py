@@ -62,7 +62,7 @@ def redis_timeout_cache(redis_url, timeout):
 
         def get_cached_result(*args, **kwargs):
             args = args[1:] if is_method else args  # remove self. from args
-            name_and_args = (function.__name__) + tuple(arg for arg in args)
+            name_and_args = (function.__name__,) + tuple(arg for arg in args)
             key = _make_key(name_and_args, kwargs, False)
             cached_result = cache.get(key)
             return key, cached_result
