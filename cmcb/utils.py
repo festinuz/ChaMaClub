@@ -24,6 +24,13 @@ def escape_reddit_markdown(string):
     return string
 
 
+def get_string_from_countable(name, value):
+    if value % 10 == 1 and value != 11:
+        return f'{value} {name}'
+    else:
+        return f'{value} {name}s'
+
+
 def logging(*triggers, out=sys.stdout):
     """Will log function if all triggers are True"""
     log = min(triggers)  # will be False if any trigger is false

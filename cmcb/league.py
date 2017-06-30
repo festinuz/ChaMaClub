@@ -52,18 +52,16 @@ class AsyncRateLeagueAPI:
             return None
 
     async def get_revision(self, region, summoner):
-        output = str()
+        out = str()
         revision_date = await self.get_summoner_revison_date(region, summoner)
         if revision_date not in ['None', None]:
             revision_date = int(revision_date)
             revision_date /= 1000
             days_ago = int((time.time() - revision_date)//DAY)
             if days_ago == 0:
-                output = 'Today'
-            elif days_ago % 10 == 1 and days_ago != 11:
-                output = f'{days_ago} day ago'
+                out = 'Today'
             else:
-                output = f'{days_ago} days ago'
+                out = utils.get_string_from_countable('day', days_ago) + ' ago'
         else:
-            output = '*Never (not found)!*'
-        return output
+            out = '*Never (not found)!*'
+        return out
