@@ -1,28 +1,17 @@
 import asyncio
-from time import time
+import time
 
 import aiohttp
 
-import static_data
 import utils
+import static_data
 
-API_URL_BASE = 'https://{platform}.api.riotgames.com/{api_url}'
-REGIONS = {'BR', 'EUNE', 'EUW', 'JP', 'KR', 'LAN', 'LAS', 'NA', 'OCE', 'TR',
-           'RU'}
 
-PLATFORMS = {
-    'BR':   'BR1',
-    'EUNE': 'EUN1',
-    'EUW':  'EUW1',
-    'JP':   'JP1',
-    'KR':   'KR',
-    'LAN':  'LA1',
-    'LAS':  'LA2',
-    'NA':   'NA1',
-    'OCE':  'OC1',
-    'TR':   'TR1',
-    'RU':   'RU',
-}
+DAY = static_data.DAY
+API_URL_BASE = static_data.LEAGUE_API_URL_BASE
+REGIONS = static_data.LEAGUE_REGIONS
+CACHE_UPDATE_TIMEOUT = static_data.LEAGUE_CACHE_UPDATE_TIMEOUT
+REDIS_URL = static_data.REDIS_URL
 
 
 class AsyncRateLeagueAPI:
@@ -46,7 +35,7 @@ class AsyncRateLeagueAPI:
 
     def _request(self, api_url, region, **kwargs):
         api_url = api_url.format(region=region, **kwargs)
-        url = API_URL_BASE.format(platform=PLATFORMS[region], api_url=api_url)
+        url = API_URL_BASE.format(platform=REGIONS[region], api_url=api_url)
         kwargs['api_key'] = self.api_key
         return self._session_get(url, params=kwargs)
 
@@ -54,8 +43,7 @@ class AsyncRateLeagueAPI:
         url = '/lol/summoner/v3/summoners/by-name/{summonerName}'
         return self._request(url, region, summonerName=summoner_name)
 
-    @utils.redis_timeout_cache(static_data.REDIS_URL,
-                               static_data.LEAGUE_UPDATE_TIMEOUT)
+    @utils.redis_timeout_cache(REDIS_URL, CACHE_UPDATE_TIMEOUT)
     async def get_summoner_revison_date(self, region, summoner):
         summoner = await self.get_summoner_by_name(region, summoner)
         try:
@@ -69,7 +57,7 @@ class AsyncRateLeagueAPI:
         if revision_date not in ['None', None]:
             revision_date = int(revision_date)
             revision_date /= 1000
-            days_ago = int((time() - revision_date)//static_data.DAY)
+            days_ago = int((time.time() - revision_date)//DAY)
             if days_ago == 0:
                 output = 'Today'
             elif days_ago % 10 == 1 and days_ago != 11:

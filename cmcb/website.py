@@ -7,8 +7,11 @@ import aiohttp_jinja2
 import static_data
 
 
+MINUTE = static_data.MINUTE
 PORT = static_data.WEBSITE_PORT
 TEMPLATES = static_data.WEBSITE_TEMPLATES_PATH
+UPDATE_TIMEOUT = int(static_data.REDDIT_UPDATE_TIMEOUT)
+SUBREDDITS_LEN = len(static_data.REDDIT_SUBREDDITS)
 
 
 class HerokuWebsite:
@@ -55,13 +58,11 @@ class HerokuWebsite:
         This function, called once, will send one GET request every 30 minutes,
         which will keep web app awake."""
         HerokuWebsite.__keep_awake_callback = loop.call_later(
-            30*static_data.MINUTE, HerokuWebsite.keep_awake, loop, url)
+            30*MINUTE, HerokuWebsite.keep_awake, loop, url)
         asyncio.ensure_future(HerokuWebsite.get(loop, url))
 
 
 @HerokuWebsite.route('GET', '/')
 async def home(request):
-    context = {
-      'subreddits_len': len(static_data.REDDIT_SUBREDDITS),
-      'update_time': int(static_data.REDDIT_UPDATE_TIMEOUT)}
+    context = {'subreddits_len': SUBREDDITS_LEN, 'update_time': UPDATE_TIMEOUT}
     return aiohttp_jinja2.render_template("index.html", request, context)

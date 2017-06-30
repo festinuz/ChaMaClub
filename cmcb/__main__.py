@@ -2,13 +2,12 @@ import asyncio
 
 import league
 import reddit
-import static_data
 import utils
 import website
+import static_data
 
 
 SUBREDDITS = static_data.REDDIT_SUBREDDITS
-print(f'Subreddits loaded: {SUBREDDITS}')
 league_api = league.AsyncRateLeagueAPI(static_data.LEAGUE_API_KEY)
 reddit_api = reddit.RateRedditAPI(
         client_id=static_data.REDDIT_CLIENT_ID,

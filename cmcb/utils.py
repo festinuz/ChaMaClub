@@ -1,23 +1,25 @@
 import sys
 import inspect
-from functools import wraps, _make_key
+import functools
 
 import redis
 
 import static_data
 
+REDDIT_MARKDOWN_CHARACTERS = static_data.REDDIT_MARKDOWN_CHARACTERS
+
 
 class DefaultSafeDict(dict):
     """Should be used instead of dict() in string.format_map function with any
     string in contents of which you are unsure in order to escape curly
-    brackets in formatted text. For example, if string contains line, entered
+    brackets in formatted text. For example, if string contains line entered
     by user - it can possibly contain {}, which will break string.format()"""
     def __missing__(self, key):
         return '{' + key + '}'
 
 
 def escape_reddit_markdown(string):
-    for charater in static_data.REDDIT_MARKDOWN_CHARACTERS:
+    for charater in REDDIT_MARKDOWN_CHARACTERS:
         string = string.replace(charater, '\\'+charater)
     return string
 
@@ -27,7 +29,7 @@ def logging(*triggers, out=sys.stdout):
     log = min(triggers)  # will be False if any trigger is false
 
     def wrapper(function):
-        @wraps(function)
+        @functools.wraps(function)
         def wrapped_function(*args, **kwargs):
             result = function(*args, **kwargs)
             if log:
@@ -36,7 +38,7 @@ def logging(*triggers, out=sys.stdout):
         return wrapped_function
 
     def async_wrapper(async_function):
-        @wraps(async_function)
+        @functools.wraps(async_function)
         async def wrapped_async_function(*args, **kwargs):
             result = await async_function(*args, **kwargs)
             if log:
@@ -64,11 +66,11 @@ def redis_timeout_cache(redis_url, timeout):
 
         def get_cached_result(*args, **kwargs):
             name_and_args = (function.__name__,) + tuple(arg for arg in args)
-            key = _make_key(name_and_args, kwargs, False)
+            key = functools._make_key(name_and_args, kwargs, False)
             cached_result = cache.get(key)
             return key, cached_result
 
-        @wraps(function)
+        @functools.wraps(function)
         def cached_function(*args, **kwargs):
             key, cached_result = get_cached_result(*args, **kwargs)
             if cached_result is not None:
@@ -78,7 +80,7 @@ def redis_timeout_cache(redis_url, timeout):
                 cache.setex(key, result, timeout)
                 return result
 
-        @wraps(function)
+        @functools.wraps(function)
         async def async_cached_function(*args, **kwargs):
             key, cached_result = get_cached_result(*args, **kwargs)
             if cached_result is not None:
