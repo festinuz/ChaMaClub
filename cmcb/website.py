@@ -4,7 +4,7 @@ import aiohttp
 import jinja2
 import aiohttp_jinja2
 
-import static_data
+from . import static_data
 
 
 MINUTE = static_data.MINUTE

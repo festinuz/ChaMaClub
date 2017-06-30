@@ -1,10 +1,10 @@
 import asyncio
 
-import league
-import reddit
-import utils
-import website
-import static_data
+from . import league
+from . import reddit
+from . import utils
+from . import website
+from . import static_data
 
 
 LEAGUE_API_KEY = static_data.LEAGUE_API_KEY

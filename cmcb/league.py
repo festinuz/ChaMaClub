@@ -3,8 +3,8 @@ import time
 
 import aiohttp
 
-import utils
-import static_data
+from . import utils
+from . import static_data
 
 
 DAY = static_data.DAY

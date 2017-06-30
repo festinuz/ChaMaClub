@@ -4,7 +4,7 @@ import functools
 
 import redis
 
-import static_data
+from . import static_data
 
 REDDIT_MARKDOWN_CHARACTERS = static_data.REDDIT_MARKDOWN_CHARACTERS
 
