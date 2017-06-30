@@ -6,10 +6,8 @@ import utils
 import website
 import static_data
 
-MINUTE = static_data.MINUTE
 
 LEAGUE_API_KEY = static_data.LEAGUE_API_KEY
-LEAGUE_UPDATE_TIMEOUT = static_data.LEAGUE_CACHE_UPDATE_TIMEOUT
 LEAGUE_REGIONS = static_data.LEAGUE_REGIONS
 
 REDDIT_ID = static_data.REDDIT_CLIENT_ID
