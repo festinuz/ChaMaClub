@@ -16,12 +16,12 @@ class AsyncRateRedditAPI:
 
     async def get_top_level_comments(self, submission_id):
         submission = await self.loop.run_in_executor(
-          None, functools.partioal(self._reddit.submission, id=submission_id))
+          None, functools.partial(self._reddit.submission, id=submission_id))
         await self.loop.run_in_executor(
-          None, functools.partioal(submission.comments.replace_more, limit=None))
+          None, functools.partial(submission.comments.replace_more, limit=None))
         return submission.comments
 
     async def edit_submission(self, submission_id, updated_text):
         submission = await self.loop.run_in_executor(
-          None, functools.partioal(self._reddit.submission, id=submission_id))
+          None, functools.partial(self._reddit.submission, id=submission_id))
         await self.loop.run_in_executor(submission.edit, updated_text)
