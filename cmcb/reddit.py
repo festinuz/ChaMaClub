@@ -1,27 +1,18 @@
-import asyncio
-import functools
-
 import praw
 
 
 class AsyncRateRedditAPI:
     def __init__(self, client_id, client_secret, user_agent, username,
-                 password, loop=None):
+                 password):
         self._reddit = praw.Reddit(
           client_id=client_id, client_secret=client_secret,
           user_agent=user_agent, username=username, password=password)
-        if loop is None:
-            loop = asyncio.get_event_loop()
-        self.loop = loop
 
     async def get_top_level_comments(self, submission_id):
-        submission = await self.loop.run_in_executor(
-          None, functools.partioal(self._reddit.submission, id=submission_id))
-        await self.loop.run_in_executor(
-          None, functools.partioal(submission.comments.replace_more, limit=None))
+        submission = self._reddit.submission(id=submission_id)
+        submission.comments.replace_more(limit=None)
         return submission.comments
 
     async def edit_submission(self, submission_id, updated_text):
-        submission = await self.loop.run_in_executor(
-          None, functools.partioal(self._reddit.submission, id=submission_id))
-        await self.loop.run_in_executor(submission.edit, updated_text)
+        submission = self._reddit.submission(id=submission_id)
+        submission.edit(updated_text)
