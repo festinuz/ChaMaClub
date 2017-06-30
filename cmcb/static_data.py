@@ -52,10 +52,10 @@ LEAGUE_REGIONS = {
 
 # Submission
 TEXT_HEAD = '''
-Hello, /r/{subreddit}! This post updates automatically to help you find
-desired club or fill your club with some folks! You can find additional info
-at the end of the post.\n\n--------\n
-'''
+Hello, /r/{subreddit}! This post updates [automatically]{websiteUrl} to help
+you find desired club or fill your club with some folks! You can find
+additional info at the end of the post.\n\n--------\n
+'''.format(websiteUrl=WEBSITE_URL)
 
 TEXT_REGION_TABLE = '''
 \n## Available **{region}** clubs:
