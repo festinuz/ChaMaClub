@@ -32,9 +32,9 @@ TEXT_BOTTOM = static_data.TEXT_BOTTOM
 
 
 league_api = league.AsyncRateLeagueAPI(LEAGUE_API_KEY)
-reddit_api = reddit.RateRedditAPI(
+reddit_api = reddit.AsyncRateRedditAPI(
         client_id=REDDIT_ID, client_secret=REDDIT_SECRET,
-        user_agent=REDDIT_AGENT, username=REDDIT_NAME, passwd=REDDIT_PASS)
+        user_agent=REDDIT_AGENT, username=REDDIT_NAME, password=REDDIT_PASS)
 
 
 class Club:
