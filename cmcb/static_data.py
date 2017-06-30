@@ -52,10 +52,11 @@ LEAGUE_REGIONS = {
 
 # Submission
 TEXT_HEAD = '''
-Hello, /r/{subreddit}! This post updates [automatically]{websiteUrl} to help
-you find desired club or fill your club with some folks! You can find
-additional info at the end of the post.\n\n--------\n
-'''.format(websiteUrl=WEBSITE_URL)
+Hello, /r/{subreddit}! This post updates
+[automatically]('https://chamaclubs.herokuapp.com/') to help you find desired
+club or fill your club with some folks! You can find additional info at the end
+of the post.\n\n--------\n
+'''
 
 TEXT_REGION_TABLE = '''
 \n## Available **{region}** clubs:
