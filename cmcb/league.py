@@ -35,7 +35,7 @@ class AsyncRateLeagueAPI:
 
     def _request(self, api_url, region, **kwargs):
         api_url = api_url.format(region=region, **kwargs)
-        url = API_URL_BASE.format(platform=REGIONS[region.upper()], api_url=api_url)
+        url = API_URL_BASE.format(platform=REGIONS[region], api_url=api_url)
         kwargs['api_key'] = self.api_key
         return self._session_get(url, params=kwargs)
 

@@ -39,9 +39,9 @@ reddit_api = reddit.AsyncRateRedditAPI(
 
 class Club:
     @classmethod
-    async def create(cls, region, summoner_name, club_name, club_tag, link):
-        self = Club(region, summoner_name, club_name, club_tag, link)
-        self.revision = await league_api.get_revision(region, summoner_name)
+    async def create(cls, region, username, club_name, club_tag, link):
+        self = Club(region, username, club_name, club_tag, link)
+        self.revision = await league_api.get_revision(self.region, username)
         return self
 
     def __init__(self, region, summoner_name, club_name, club_tag, link):
