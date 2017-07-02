@@ -35,7 +35,6 @@ REDDIT_MARKDOWN_CHARACTERS = '*+-_~#^=`[]()>/'
 # League
 LEAGUE_API_KEY = os.environ['LEAGUE_API_KEY']
 LEAGUE_CACHE_UPDATE_TIMEOUT = HOUR  # used by cache function as expiration time
-LEAGUE_API_URL_BASE = 'https://{platform}.api.riotgames.com/{api_url}'
 LEAGUE_REGIONS = {
     'BR':   'BR1',
     'EUNE': 'EUN1',

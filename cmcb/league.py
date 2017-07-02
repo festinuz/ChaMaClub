@@ -8,7 +8,6 @@ from . import static_data
 
 
 DAY = static_data.DAY
-API_URL_BASE = static_data.LEAGUE_API_URL_BASE
 REGIONS = static_data.LEAGUE_REGIONS
 CACHE_UPDATE_TIMEOUT = static_data.LEAGUE_CACHE_UPDATE_TIMEOUT
 REDIS_URL = static_data.REDIS_URL
@@ -34,6 +33,7 @@ class AsyncRateLeagueAPI:
         return response
 
     def _request(self, api_url, region, **kwargs):
+        API_URL_BASE = 'https://{platform}.api.riotgames.com/{api_url}'
         api_url = api_url.format(region=region, **kwargs)
         url = API_URL_BASE.format(platform=REGIONS[region], api_url=api_url)
         kwargs['api_key'] = self.api_key
