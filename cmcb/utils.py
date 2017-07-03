@@ -97,14 +97,14 @@ def get_result_type(function):
     try:
         result_type = typing.get_type_hints(function)['return']
     except KeyError:
-        name = function.__name__
-        e = f'Cached function {name} lacks return type hint'
+        qualname = function.__qualname__
+        e = f'Cached function {qualname} lacks return type hint'
         raise ValueError(e)
     return result_type
 
 
 def make_key(function, *args, **kwargs):
-    name_and_args = (function.__name__,) + tuple(a for a in args)
+    name_and_args = (function.__qualname__,) + tuple(a for a in args)
     return functools._make_key(name_and_args, kwargs, False)
 
 
@@ -153,6 +153,7 @@ def cached(timeout=None, redis_url=None):
         func.result_type = get_result_type(function)
         func.is_async = inspect.iscoroutinefunction(function)
         func.function = function
+        print(func.function, func.function.__qualname__)
         if func.is_async:
             return functools.wraps(function)(async_cached_function)
         else:
