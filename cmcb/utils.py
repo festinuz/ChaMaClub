@@ -137,7 +137,7 @@ def cached(timeout=None, redis_url=None):
             return result
 
     async def async_cached_function(*args, **kwargs):
-        key = make_key(*args, **kwargs)
+        key = make_key(func.function, *args, **kwargs)
         cached_result = cache.get(key)
         if cached_result:
             return func.result_type(cached_result.decode('utf-8'))
@@ -153,7 +153,6 @@ def cached(timeout=None, redis_url=None):
         func.result_type = get_result_type(function)
         func.is_async = inspect.iscoroutinefunction(function)
         func.function = function
-        print(func.function, func.function.__qualname__)
         if func.is_async:
             return functools.wraps(function)(async_cached_function)
         else:
