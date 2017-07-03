@@ -43,7 +43,7 @@ class AsyncRateLeagueAPI:
         url = '/lol/summoner/v3/summoners/by-name/{summonerName}'
         return self._request(url, region, summonerName=summoner_name)
 
-    @utils.redis_timeout_cache(REDIS_URL, CACHE_UPDATE_TIMEOUT)
+    @utils.cached(timeout=CACHE_UPDATE_TIMEOUT, redis_url=REDIS_URL)
     async def get_summoner_revison_date(self, region, summoner):
         summoner = await self.get_summoner_by_name(region, summoner)
         try:
