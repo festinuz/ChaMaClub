@@ -44,18 +44,17 @@ class AsyncRateLeagueAPI:
         return self._request(url, region, summonerName=summoner_name)
 
     @utils.cached(timeout=CACHE_UPDATE_TIMEOUT, redis_url=REDIS_URL)
-    async def get_summoner_revison_date(self, region, summoner):
+    async def get_summoner_revison_date(self, region, summoner) -> int:
         summoner = await self.get_summoner_by_name(region, summoner)
         try:
-            return summoner['revisionDate']
+            return int(summoner['revisionDate'])
         except KeyError:
-            return None
+            return 0
 
     async def get_revision(self, region, summoner):
         out = str()
         revision_date = await self.get_summoner_revison_date(region, summoner)
-        if revision_date not in ['None', None]:
-            revision_date = int(revision_date)
+        if revision_date:
             revision_date /= 1000
             days_ago = int((time.time() - revision_date)//DAY)
             if days_ago == 0:

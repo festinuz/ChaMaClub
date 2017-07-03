@@ -111,7 +111,8 @@ def make_key(function, *args, **kwargs):
 def cached(timeout=None, redis_url=None):
     """Requires return type hint on cached function! If used on class methods,
     make sure that class has defined __repr__ method so that in can be
-    consistently represented between application restarts"""
+    consistently represented between application restarts. Function should only
+    return one data type."""
     class Function:  # Used as mutable to store data about cached function
         pass
 
