@@ -57,7 +57,7 @@ class Club:
 
     def __str__(self):
         return TEXT_CLUB_ROW.format(self.club, self.permalink, self.tag,
-                                    self.owner, self.opgg, self.revision)
+                                    self.owner, self.opgg)
 
 
 @utils.logging(DEBUG_CLUB_PARSER)

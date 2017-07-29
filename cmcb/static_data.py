@@ -59,11 +59,11 @@ of the post.\n\n--------\n
 
 TEXT_REGION_TABLE = '''
 \n## Available **{region}** clubs:
-Club name|Club tag|Owner IGN|Last time online
-:--------|:-------|:--------|:---------------
+Club name|Club tag|Owner IGN
+:--------|:-------|:--------
 '''
 
-TEXT_CLUB_ROW = '[{}]({} "Go to comment")|{}|[{}]({} "Check on op.gg")|{}\n'
+TEXT_CLUB_ROW = '[{}]({} "Go to comment")|{}|[{}]({} "Check on op.gg")\n'
 
 TEXT_EMPTY_REGIONS = '''
 Unfortunately, there are no clubs available for following regions at the moment
@@ -109,6 +109,9 @@ At the moment, the bot is set to update the post every {redditRevision}
 seconds. The "Last time online" column updates every {leagueRevision} minutes.
 The bot is currently hosted on Heroku and should be working 24/7! **If you have
 a suggestion, feature request or a problem, [send a PM to me](/u/festinuz)!**
+
+**UPDATE**: Due to RIOT api usage rules, "Last time online" column will return
+once rito will accept my application and grant me an api key.
 '''.format(regions=', '.join(sorted(LEAGUE_REGIONS)),
            redditRevision=REDDIT_UPDATE_TIMEOUT,
            leagueRevision=LEAGUE_CACHE_UPDATE_TIMEOUT//MINUTE)
