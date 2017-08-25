@@ -52,7 +52,7 @@ LEAGUE_REGIONS = {
 # Submission
 TEXT_HEAD = '''
 Hello, /r/{subreddit}! This post updates
-[automatically](https://chamaclubs.herokuapp.com/) to help you find desired
+automatically ([example](https://www.reddit.com/r/Rivenmains/comments/6jkn3u/automated_clubs_megathread/?sort=new)) to help you find desired
 club or fill your club with some folks! You can find additional info at the end
 of the post.\n\n--------\n
 '''
