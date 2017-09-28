@@ -68,7 +68,7 @@ def is_valid_club(comment_body):
                 comment_body[1].upper() in LEAGUE_REGIONS and
                 len(comment_body[2]) < 20 and
                 len(comment_body[3]) < 26 and
-                2 < len(comment_body[4]) < 6 or comment_body[4] in ['-', '$']):
+                1 < len(comment_body[4]) < 6 or comment_body[4] in ['-', '$']):
             return True
         else:
             return False
