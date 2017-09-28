@@ -59,7 +59,7 @@ of the post.\n\n--------\n
 
 TEXT_REGION_TABLE = '''
 \n## Available **{region}** clubs:
-Club name|Club tag|Owner IGN|Last time online
+Club name|Club tag|Owner IGN|Last time in-game
 :--------|:-------|:--------|:---------------
 '''
 
