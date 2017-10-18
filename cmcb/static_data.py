@@ -47,6 +47,7 @@ LEAGUE_REGIONS = {
     'OCE':  'OC1',
     'TR':   'TR1',
     'RU':   'RU',
+    'PBE':  'PBE1',
 }
 
 # Submission
