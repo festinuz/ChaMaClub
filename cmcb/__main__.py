@@ -83,10 +83,8 @@ async def get_clubs_from_subreddit(submission_id):
         body = [i.strip() for i in comment.body.split('\n') if i != '']
         comment_is_club = is_valid_club(body)
         if comment_is_club:
-            print(comment)
-            print(body[1], body[2], body[3], body[4], comment.permalink())
             new_club = Club.create(body[1], body[2], body[3], body[4],
-                                   comment.permalink())
+                                   comment.permalink)
             clubs_by_regions[body[1].upper()].append(new_club)
     temp = [asyncio.gather(*clubs) for reg, clubs in clubs_by_regions.items()]
     region_clubs = await asyncio.gather(*temp)
