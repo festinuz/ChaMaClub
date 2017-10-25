@@ -14,7 +14,11 @@ class AsyncRateRedditAPI:
         # monkeypatch PRAW 5.2.0 bug
         comments = list()
         for comment in submission.comments:
-            comment.body
+            p_link = getattr(comment, "permalink", None)
+            if callable(p_link):
+                comment.permalink = p_link()
+            else:
+                comment.permalink = p_link
             comments.append(comment)
         return comments
 
