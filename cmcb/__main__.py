@@ -63,7 +63,7 @@ class Club:
         else:
             string = ALT_CLUB_ROW.format(self.club, self.tag, self.owner,
                                          self.opgg, self.revision)
-        return
+        return string
 
 
 @utils.logging(DEBUG_CLUB_PARSER)
