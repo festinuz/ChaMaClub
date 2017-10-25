@@ -11,7 +11,12 @@ class AsyncRateRedditAPI:
     async def get_top_level_comments(self, submission_id):
         submission = self._reddit.submission(id=submission_id)
         submission.comments.replace_more(limit=None)
-        return submission.comments
+        # monkeypatch PRAW 5.2.0 bug
+        comments = list()
+        for comment in submission.comments:
+            comment.body
+            comments.append(comments)
+        return comments
 
     async def edit_submission(self, submission_id, updated_text):
         submission = self._reddit.submission(id=submission_id)
