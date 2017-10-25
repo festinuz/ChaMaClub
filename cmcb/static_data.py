@@ -65,6 +65,7 @@ Club name|Club tag|Owner IGN|Last time in-game
 '''
 
 TEXT_CLUB_ROW = '[{}]({} "Go to comment")|{}|[{}]({} "Check on op.gg")|{}\n'
+ALT_CLUB_ROW = '{}|{}|[{}]({} "Check on op.gg")|{}\n'
 
 TEXT_EMPTY_REGIONS = '''
 Unfortunately, there are no clubs available for following regions at the moment

@@ -27,6 +27,7 @@ DEBUG_CLUB_PARSER = static_data.DEBUG_CLUB_PARSER
 TEXT_HEAD = static_data.TEXT_HEAD
 TEXT_REGION_TABLE = static_data.TEXT_REGION_TABLE
 TEXT_CLUB_ROW = static_data.TEXT_CLUB_ROW
+ALT_CLUB_ROW = static_data.ALT_CLUB_ROW
 TEXT_EMPTY_REGIONS = static_data.TEXT_EMPTY_REGIONS
 TEXT_BOTTOM = static_data.TEXT_BOTTOM
 
@@ -56,8 +57,13 @@ class Club:
         self.opgg = f'https://{region}.op.gg/summoner/userName={summoner_name}'
 
     def __str__(self):
-        return TEXT_CLUB_ROW.format(self.club, self.permalink, self.tag,
-                                    self.owner, self.opgg, self.revision)
+        if self.permalink is not None:
+            string = TEXT_CLUB_ROW.format(self.club, self.permalink, self.tag,
+                                          self.owner, self.opgg, self.revision)
+        else:
+            string = ALT_CLUB_ROW.format(self.club, self.tag, self.owner,
+                                         self.opgg, self.revision)
+        return
 
 
 @utils.logging(DEBUG_CLUB_PARSER)
