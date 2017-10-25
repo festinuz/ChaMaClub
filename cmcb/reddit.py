@@ -15,7 +15,7 @@ class AsyncRateRedditAPI:
         comments = list()
         for comment in submission.comments:
             comment.body
-            comments.append(comments)
+            comments.append(comment)
         return comments
 
     async def edit_submission(self, submission_id, updated_text):
