@@ -91,7 +91,10 @@ async def get_clubs_from_subreddit(submission_id):
         if comment_is_club:
             new_club = Club.create(body[1], body[2], body[3], body[4],
                                    comment.permalink)
-            clubs_by_regions[body[1].upper()].append(new_club)
+            try:
+                clubs_by_regions[body[1].upper()].append(new_club)
+            except KeyError:
+                pass
     temp = [asyncio.gather(*clubs) for reg, clubs in clubs_by_regions.items()]
     region_clubs = await asyncio.gather(*temp)
     clubs_by_regions = {region: list() for region in LEAGUE_REGIONS}
